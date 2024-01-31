@@ -13,7 +13,6 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(40), nullable=False)
     last_name = db.Column(db.String(40), nullable=False)
-    # username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now)
@@ -36,8 +35,11 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             'id': self.id,
-            # 'username': self.username,
             'first_name': self.first_name,
             'last_name': self.last_name,
             'email': self.email
         }
+
+
+# username = db.Column(db.String(40), nullable=False, unique=True)
+# 'username': self.username,

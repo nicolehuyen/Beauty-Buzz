@@ -18,13 +18,13 @@ class Review(db.Model):
     product = db.relationship('Product', back_populates='review')
     reviewer = db.relationship('User', back_populates='reviews')
 
-def to_dict(self):
-    return {
-        'id': self.id,
-        'product_id': self.product_id,
-        'creator_id': self.creator_id,
-        'review': self.review,
-        'stars': self.stars,
-        'created_at': self.created_at,
-        'updated_at': self.updated_at
-    }
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'product_id': self.product_id,
+            'creator_id': self.creator_id,
+            'review': self.review,
+            'stars': self.stars,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }

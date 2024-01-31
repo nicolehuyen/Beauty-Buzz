@@ -143,6 +143,7 @@ def seed_reviews():
     db.session.add(review18)
     db.session.add(review19)
     db.session.add(review20)
+    db.session.commit()
 
 def undo_reviews():
     if environment == "production":

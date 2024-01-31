@@ -103,6 +103,7 @@ def seed_product_images():
     db.session.add(image18)
     db.session.add(image19)
     db.session.add(image20)
+    db.session.commit()
 
 def undo_product_images():
     if environment == "production":

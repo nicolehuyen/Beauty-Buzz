@@ -163,6 +163,7 @@ def seed_products():
     db.session.add(bnt2)
     db.session.add(bnt3)
     db.session.add(bnt4)
+    db.session.commit()
 
 def undo_products():
     if environment == "production":

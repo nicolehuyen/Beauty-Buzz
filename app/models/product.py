@@ -20,14 +20,14 @@ class Product(db.Model):
     review = db.relationship('Review', back_populates='product', cascade='all, delete-orphan')
     image = db.relationship('ProductImage', back_populates='product', cascade='all, delete-orphan')
 
-def to_dict(self):
-    return {
-        'id': self.id,
-        'seller_id': self.seller_id,
-        'name': self.name,
-        'price': self.price,
-        'description': self.description,
-        'category': self.category,
-        'created_at': self.created_at,
-        'updated_at': self.updated_at
-    }
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'seller_id': self.seller_id,
+            'name': self.name,
+            'price': self.price,
+            'description': self.description,
+            'category': self.category,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
