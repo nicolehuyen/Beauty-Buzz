@@ -9,7 +9,7 @@ class ProductImage(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('products.id')), nullable=False)
-    url = db.Column(db.String(255), nullable=False)
+    image = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
@@ -19,5 +19,5 @@ class ProductImage(db.Model):
         return {
             'id': self.id,
             'product_id': self.product_id,
-            'url': self.url
+            'image': self.image
         }
