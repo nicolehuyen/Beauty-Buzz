@@ -26,6 +26,7 @@ def manage_products():
 @login_required
 def product_form():
     form = ProductForm()
+    # giving the form a csrf token so we can make changes to the data on the server
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         product = Product(

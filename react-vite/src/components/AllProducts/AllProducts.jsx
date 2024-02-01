@@ -13,7 +13,9 @@ function AllProducts() {
     const images = useSelector(state => state.image)
     const imagesObj = Object.values(images)
     const productKeys = Object.keys(products)
-    console.log('imagesIMAGESSS', )
+    console.log('productKEYYYSSSS', productKeys)
+    console.log('imagesssss', images)
+    console.log('productssss', products)
 
     useEffect(() => {
         dispatch(loadProductsThunk())
@@ -25,7 +27,7 @@ function AllProducts() {
         <section className='all-products-section'>
             <div className='products-container'>
                 {users && images && productKeys.map((id) => (
-                    <ProductTile key={id} product={products[id]} seller={users[products[id]['seller_id']]} image={images[products[id]['product_id']]}/>
+                    <ProductTile key={id} product={products[id]} seller={users[products[id]['seller_id']]} image={images[products[id]['id']]}/>
                 ))}
             </div>
         </section>

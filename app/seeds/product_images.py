@@ -52,35 +52,35 @@ def seed_product_images():
     )
     image13 = ProductImage(
         product_id = 13,
-        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/brushes.png'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/nars-blush.png'
     )
     image14 = ProductImage(
         product_id = 14,
-        image = 'https://media.ulta.com/i/ulta/2592591?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/fenty-contour.png'
     )
     image15 = ProductImage(
         product_id = 15,
-        image = 'https://media.ulta.com/i/ulta/2592464?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/fenty-bronzer.png'
     )
     image16 = ProductImage(
         product_id = 16,
-        image = 'https://media.ulta.com/i/ulta/2592587?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/fenty-highlighter.png'
     )
     image17 = ProductImage(
         product_id = 17,
-        image = 'https://media.ulta.com/i/ulta/2534700?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/brushes.png'
     )
     image18 = ProductImage(
         product_id = 18,
-        image = 'https://media.ulta.com/i/ulta/2530759?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/blender.png'
     )
     image19 = ProductImage(
         product_id = 19,
-        image = 'https://media.ulta.com/i/ulta/2305959?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/lash-curler.png'
     )
     image20 = ProductImage(
         product_id = 20,
-        image = 'https://media.ulta.com/i/ulta/2524588?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/brow-brush.png'
     )
 
     db.session.add(image1)
