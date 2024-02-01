@@ -69,7 +69,7 @@ def images():
     all_images = ProductImage.query.all()
     return {'images': [image.to_dict() for image in all_images]}
 
-@product_routes.route('/<int:id>/images')
+@product_routes.route('/<int:id>/image')
 def product_images(id):
     product_image = ProductImage.query.filter_by(product_id=id).all()
     return {'product_images': [image.to_dict() for image in product_image]}

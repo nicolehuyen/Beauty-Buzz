@@ -4,55 +4,55 @@ from sqlalchemy.sql import text
 def seed_product_images():
     image1 = ProductImage(
         product_id = 1,
-        image = 'https://media.ulta.com/i/ulta/2592526?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/fenty-foundation.png'
     )
     image2 = ProductImage(
         product_id = 2,
-        image = 'https://media.ulta.com/i/ulta/2555984?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/nars-concealer.png'
     )
     image3 = ProductImage(
         product_id = 3,
-        image = 'https://media.ulta.com/i/ulta/2559917?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/laura-mercier-powder.png'
     )
     image4 = ProductImage(
         product_id = 4,
-        image = 'https://media.ulta.com/i/ulta/2503490?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/setting-spray.png'
     )
     image5 = ProductImage(
         product_id = 5,
-        image = 'https://media.ulta.com/i/ulta/2263444?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/mascara.png'
     )
     image6 = ProductImage(
         product_id = 6,
-        image = 'https://media.ulta.com/i/ulta/2143881?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/brow-duo.png'
     )
     image7 = ProductImage(
         product_id = 7,
-        image = 'https://media.ulta.com/i/ulta/2293234?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/eye-palette.png'
     )
     image8 = ProductImage(
         product_id = 8,
-        image = 'https://media.ulta.com/i/ulta/2604618?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/kiss-lashes.png'
     )
     image9 = ProductImage(
         product_id = 9,
-        image = 'https://media.ulta.com/i/ulta/2604263?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/dior-lip.png'
     )
     image10 = ProductImage(
         product_id = 10,
-        image = 'https://media.ulta.com/i/ulta/2511157?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/mac-lipstick.png'
     )
     image11 = ProductImage(
         product_id = 11,
-        image = 'https://media.ulta.com/i/ulta/2226177?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/nyx-pencil.png'
     )
     image12 = ProductImage(
         product_id = 12,
-        image = 'https://media.ulta.com/i/ulta/2578180?w=1666&h=1666'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/aquaphor.png'
     )
     image13 = ProductImage(
         product_id = 13,
-        image = 'https://media.ulta.com/i/ulta/2504457?w=1100&h=1100'
+        image = 'https://beauty-buzz-images.s3.us-east-2.amazonaws.com/brushes.png'
     )
     image14 = ProductImage(
         product_id = 14,

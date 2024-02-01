@@ -1,5 +1,6 @@
 const LOAD_PRODUCTS = 'products/loadProducts'
 const LOAD_ONE_PRODUCT = 'products/loadOneProduct'
+// const LOAD_PRODUCT_IMAGES = 'products/loadProductImages'
 const MANAGE_PRODUCTS = 'products/manageProducts'
 const CREATE_PRODUCT = 'products/createProduct'
 const UPDATE_PRODUCT = 'products/updateProduct'
@@ -18,6 +19,13 @@ const loadOneProduct = (product) => {
         product
     }
 }
+
+// const loadProductImages = (images) => {
+//     return {
+//         type: LOAD_PRODUCT_IMAGES,
+//         images
+//     }
+// }
 
 const manageProducts = (products) => {
     return {
@@ -66,6 +74,16 @@ export const loadOneProductThunk = (productId) => async(dispatch) => {
         return data
     }
 }
+
+// export const loadProductImagesThunk = () => async(dispatch) => {
+//     const res = await fetch(`/api/products/images`)
+
+//     if (res.ok) {
+//         const data = await res.json()
+//         dispatch(loadProductImages(data))
+//         return data
+//     }
+// }
 
 export const manageProductsThunk = () => async(dispatch) => {
     const res = await fetch('/api/products/manage')
@@ -136,6 +154,13 @@ const productReducer = (state = {}, action) => {
             })
             return newState
         }
+        // case LOAD_PRODUCT_IMAGES: {
+        //     const newState = {}
+        //     action.images.images.forEach(image => {
+        //         newState[image.id] = image
+        //     })
+        //     return newState
+        // }
         case LOAD_ONE_PRODUCT: {
             const newState = {}
             newState[action.product.id] = action.product
