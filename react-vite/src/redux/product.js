@@ -207,7 +207,7 @@ const productReducer = (state = {}, action) => {
         // }
         case MANAGE_PRODUCTS: {
             const newState = {}
-            action.products.products.forEach(product => {
+            action.products.user_products.forEach(product => {
                 newState[product.id] = product
             })
             return newState

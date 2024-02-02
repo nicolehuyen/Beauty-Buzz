@@ -7,6 +7,7 @@ import ProductDetails from '../components/ProductDetails/ProductDetails';
 import ProductCategory from '../components/ProductCategory/ProductCategory';
 import CreateProduct from '../components/CreateProduct/CreateProduct';
 import UpdateProduct from '../components/UpdateProduct/UpdateProduct';
+import ManageProducts from '../components/ManageProducts/ManageProducts';
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         path: "products/:productId/edit",
         element: <UpdateProduct />,
+      },
+      {
+        path: "products/manage",
+        element: <ManageProducts />,
       },
       {
         path: "*",
