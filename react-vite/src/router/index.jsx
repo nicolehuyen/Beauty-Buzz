@@ -1,7 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
+import Layout from './Layout';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
-import Layout from './Layout';
+import AllProducts from '../components/AllProducts/AllProducts';
+import ProductDetails from '../components/ProductDetails/ProductDetails';
+import ProductCategory from '../components/ProductCategory/ProductCategory';
+import CreateProduct from '../components/CreateProduct/CreateProduct';
+import UpdateProduct from '../components/UpdateProduct/UpdateProduct';
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +24,30 @@ export const router = createBrowserRouter([
         path: "signup",
         element: <SignupFormPage />,
       },
+      {
+        path: "products",
+        element: <AllProducts />,
+      },
+      {
+        path: "products/:productId",
+        element: <ProductDetails />,
+      },
+      {
+        path: "products/category/:category",
+        element: <ProductCategory />,
+      },
+      {
+        path: "products/new",
+        element: <CreateProduct />,
+      },
+      {
+        path: "products/:productId/edit",
+        element: <UpdateProduct />,
+      },
+      {
+        path: "*",
+        element: <h2>Page Not Found</h2>
+      }
     ],
   },
 ]);
