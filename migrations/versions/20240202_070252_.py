@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: df47258e34e4
+Revision ID: ccccef65b891
 Revises:
-Create Date: 2024-02-01 19:30:45.612076
+Create Date: 2024-02-02 07:02:52.807580
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = 'df47258e34e4'
+revision = 'ccccef65b891'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -58,12 +58,11 @@ def upgrade():
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
+    # ### end Alembic commands ###
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE products SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE reviews SET SCHEMA {SCHEMA};")
-    # ### end Alembic commands ###
 
 
 def downgrade():
