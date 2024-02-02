@@ -44,8 +44,8 @@ function CreateProduct() {
             // aws uploads can be a bit slow—displaying
             // some sort of loading message is a good idea
             setImageLoading(true)
-            await dispatch(createProductThunk(formData))
-            navigate(`/products`)
+            const product = await dispatch(createProductThunk(formData))
+            navigate(`/products/${product.id}`)
         }
     }
 
