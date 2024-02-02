@@ -13,12 +13,13 @@ class Product(db.Model):
     price = db.Column(db.Numeric(3,2), nullable=False)
     description = db.Column(db.Text, nullable=False)
     category = db.Column(db.String(40), nullable=False)
+    image = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     seller = db.relationship('User', back_populates='products')
     review = db.relationship('Review', back_populates='product', cascade='all, delete-orphan')
-    image = db.relationship('ProductImage', back_populates='product', cascade='all, delete-orphan')
+    # image = db.relationship('ProductImage', back_populates='product', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
@@ -28,6 +29,7 @@ class Product(db.Model):
             'price': self.price,
             'description': self.description,
             'category': self.category,
+            'image': self.image,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
