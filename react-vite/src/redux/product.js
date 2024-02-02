@@ -1,5 +1,6 @@
 const LOAD_PRODUCTS = 'products/loadProducts'
 const LOAD_ONE_PRODUCT = 'products/loadOneProduct'
+const LOAD_CATEGORIES = 'products/loadCategories'
 const LOAD_CATEGORY_PRODUCTS = 'products/loadCategoryProducts'
 const MANAGE_PRODUCTS = 'products/manageProducts'
 const CREATE_PRODUCT = 'products/createProduct'
@@ -18,6 +19,13 @@ const loadOneProduct = (product) => {
     return {
         type: LOAD_ONE_PRODUCT,
         product
+    }
+}
+
+const loadCategories = (products) => {
+    return {
+        type: LOAD_CATEGORIES,
+        products
     }
 }
 
@@ -86,11 +94,22 @@ export const loadOneProductThunk = (productId) => async(dispatch) => {
     }
 }
 
-export const loadCategoryProductsThunk = (category) => async(dispatch) => {
-    const res = await fetch(`/api/products/${category}`)
+export const loadCategoriesThunk = () => async(dispatch) => {
+    const res = await fetch(`/api/products/category`)
 
     if (res.ok) {
         const data = await res.json()
+        dispatch(loadCategories(data))
+        return data
+    }
+}
+
+export const loadCategoryProductsThunk = (category) => async(dispatch) => {
+    const res = await fetch(`/api/products/category/${category}`)
+
+    if (res.ok) {
+        const data = await res.json()
+        data.product_categories = category
         dispatch(loadCategoryProducts(data))
         return data
     }
@@ -119,8 +138,7 @@ export const manageProductsThunk = () => async(dispatch) => {
 export const createProductThunk = (product) => async(dispatch) => {
     const res = await fetch('/api/products/new', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(product)
+        body: product
     })
 
     if (res.ok) {
@@ -133,8 +151,7 @@ export const createProductThunk = (product) => async(dispatch) => {
 export const updateProductThunk = (product, productId) => async(dispatch) => {
     const res = await fetch(`/api/products/${productId}/edit`, {
         method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(product)
+        body: product
     })
 
     if (res.ok) {
@@ -169,11 +186,16 @@ const productReducer = (state = {}, action) => {
             newState[action.product.id] = action.product
             return newState
         }
-        case LOAD_CATEGORY_PRODUCTS: {
+        case LOAD_CATEGORIES: {
             const newState = {}
             action.products.products.forEach(product => {
                 newState[product.id] = product
             })
+            return newState
+        }
+        case LOAD_CATEGORY_PRODUCTS: {
+            const newState = {...state}
+            newState[action.products.product_categories] = [action.products.products]
             return newState
         }
         // case LOAD_PRODUCT_IMAGES: {

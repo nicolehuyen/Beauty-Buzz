@@ -16,6 +16,8 @@ function AllProducts() {
         dispatch(loadUsersThunk())
     }, [dispatch])
 
+    if(!products || !users) return null
+
     return (
         <section className='all-products-section'>
             <div className='products-container'>
