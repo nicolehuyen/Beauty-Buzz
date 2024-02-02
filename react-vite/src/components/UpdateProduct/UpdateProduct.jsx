@@ -29,7 +29,7 @@ function UpdateProduct() {
         if(!image || !image?.name?.endsWith('.png') && !image?.name?.endsWith('.jpg') && !image?.name?.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format'
 
         setErrors(newErrors)
-    }, [sessionUser, name, price, description, image])
+    }, [sessionUser, navigate, name, price, description, image])
 
     useEffect(() => {
         dispatch(loadOneProductThunk(productId))
