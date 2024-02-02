@@ -1,8 +1,8 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .products import seed_products, undo_products
-from .product_images import seed_product_images, undo_product_images
 from .reviews import seed_reviews, undo_reviews
+# from .product_images import seed_product_images, undo_product_images
 
 from app.models.db import db, environment, SCHEMA
 
@@ -19,19 +19,22 @@ def seed():
         # command, which will  truncate all tables prefixed with
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
+
         # db.session.execute(f"TRUNCATE table {SCHEMA}.reviews RESTART IDENTITY CASCADE;")
         # db.session.execute(f"TRUNCATE table {SCHEMA}.product_images RESTART IDENTITY CASCADE;")
         # db.session.execute(f"TRUNCATE table {SCHEMA}.products RESTART IDENTITY CASCADE;")
         # db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
         # db.session.commit()
+
+        # undo_product_images()
+
         undo_reviews()
-        undo_product_images()
         undo_products()
         undo_users()
     seed_users()
     seed_products()
-    seed_product_images()
     seed_reviews()
+    # seed_product_images()
     # Add other seed functions here
 
 
@@ -39,7 +42,7 @@ def seed():
 @seed_commands.command('undo')
 def undo():
     undo_reviews()
-    undo_product_images()
     undo_products()
     undo_users()
+    # undo_product_images()
     # Add other undo functions here

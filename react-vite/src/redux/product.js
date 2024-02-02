@@ -1,10 +1,11 @@
 const LOAD_PRODUCTS = 'products/loadProducts'
 const LOAD_ONE_PRODUCT = 'products/loadOneProduct'
-// const LOAD_PRODUCT_IMAGES = 'products/loadProductImages'
+const LOAD_CATEGORY_PRODUCTS = 'products/loadCategoryProducts'
 const MANAGE_PRODUCTS = 'products/manageProducts'
 const CREATE_PRODUCT = 'products/createProduct'
 const UPDATE_PRODUCT = 'products/updateProduct'
 const DELETE_PRODUCT = 'products/deleteProduct'
+// const LOAD_PRODUCT_IMAGES = 'products/loadProductImages'
 
 const loadProducts = (products) => {
     return {
@@ -17,6 +18,13 @@ const loadOneProduct = (product) => {
     return {
         type: LOAD_ONE_PRODUCT,
         product
+    }
+}
+
+const loadCategoryProducts = (products) => {
+    return {
+        type: LOAD_CATEGORY_PRODUCTS,
+        products
     }
 }
 
@@ -55,6 +63,9 @@ const deleteProduct = (productId) => {
     }
 }
 
+//  main purposes of thunk actions
+//  1. send fetch request
+//  2. update data into redux store
 export const loadProductsThunk = () => async(dispatch) => {
     const res = await fetch('/api/products')
 
@@ -71,6 +82,16 @@ export const loadOneProductThunk = (productId) => async(dispatch) => {
     if (res.ok) {
         const data = await res.json()
         dispatch(loadOneProduct(data))
+        return data
+    }
+}
+
+export const loadCategoryProductsThunk = (category) => async(dispatch) => {
+    const res = await fetch(`/api/products/${category}`)
+
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(loadCategoryProducts(data))
         return data
     }
 }
@@ -95,7 +116,7 @@ export const manageProductsThunk = () => async(dispatch) => {
     }
 }
 
-export const createProductThunk = (product, image) => async(dispatch) => {
+export const createProductThunk = (product) => async(dispatch) => {
     const res = await fetch('/api/products/new', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -104,18 +125,7 @@ export const createProductThunk = (product, image) => async(dispatch) => {
 
     if (res.ok) {
         const data = await res.json()
-
-        const productImage = await fetch(`/api/products/${data.id}/images`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                image: image
-            })
-        })
-
-        const imageData = await productImage.json()
-
-        dispatch(createProduct(imageData))
+        dispatch(createProduct(data))
         return data
     }
 }
@@ -154,6 +164,18 @@ const productReducer = (state = {}, action) => {
             })
             return newState
         }
+        case LOAD_ONE_PRODUCT: {
+            const newState = {}
+            newState[action.product.id] = action.product
+            return newState
+        }
+        case LOAD_CATEGORY_PRODUCTS: {
+            const newState = {}
+            action.products.products.forEach(product => {
+                newState[product.id] = product
+            })
+            return newState
+        }
         // case LOAD_PRODUCT_IMAGES: {
         //     const newState = {}
         //     action.images.images.forEach(image => {
@@ -161,11 +183,6 @@ const productReducer = (state = {}, action) => {
         //     })
         //     return newState
         // }
-        case LOAD_ONE_PRODUCT: {
-            const newState = {}
-            newState[action.product.id] = action.product
-            return newState
-        }
         case MANAGE_PRODUCTS: {
             const newState = {}
             action.products.products.forEach(product => {
