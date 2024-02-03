@@ -17,7 +17,7 @@ def product_detail(id):
     return product.to_dict()
 
 @product_routes.route('/category/<cate>')
-def productCategory(cate):
+def product_category(cate):
     product_categories = Product.query.filter_by(category=cate).all()
     return {'product_categories': [category.to_dict() for category in product_categories]}
 
@@ -43,7 +43,7 @@ def product_form():
         # if the dictionary doesn't have a url key
         # it means that there was an error when you tried to upload
         # so you send back that error message (and you printed it above)
-            return [upload], 401
+            return {'errors': {'message': 'error with upload'}}, 401
 
         url = upload['url']
 

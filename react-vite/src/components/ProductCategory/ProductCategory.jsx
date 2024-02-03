@@ -8,20 +8,31 @@ import { loadUsersThunk } from '../../redux/user'
 function ProductCategory() {
     const dispatch = useDispatch()
     const { category } = useParams()
-    const product = useSelector(state => state.product[category])
+    const products = useSelector(state => state.product[category])
     const user = useSelector(state => state.user)
-    console.log('categoriesss', product)
 
     useEffect(() => {
         dispatch(loadCategoryProductsThunk(category))
         dispatch(loadUsersThunk())
     }, [dispatch, category])
 
-    if(!product || !user) return null
+    if(!products || !user) return null
+    const prodObj = Object.values(products)
 
     return (
-        <section className='category-products'>
-            <p>hi</p>
+        <section className='all-products-section'>
+            <div className='products-container'>
+                {prodObj.map((product) => (
+                    <div key={product?.id}>
+                        <div className='product-tile'>
+                            <img className='product-image' src={product?.image} alt='product-image' />
+                            <span className='seller-name'>{`${user[product?.seller_id]?.first_name} ${user[product?.seller_id]?.last_name}`}</span>
+                            <h3 className='product-name'>{product?.name}</h3>
+                            <span className='product-price'>{`$${product?.price}`}</span>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </section>
     )
 }

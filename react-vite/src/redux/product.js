@@ -1,6 +1,5 @@
 const LOAD_PRODUCTS = 'products/loadProducts'
 const LOAD_ONE_PRODUCT = 'products/loadOneProduct'
-const LOAD_CATEGORIES = 'products/loadCategories'
 const LOAD_CATEGORY_PRODUCTS = 'products/loadCategoryProducts'
 const MANAGE_PRODUCTS = 'products/manageProducts'
 const CREATE_PRODUCT = 'products/createProduct'
@@ -22,17 +21,10 @@ const loadOneProduct = (product) => {
     }
 }
 
-const loadCategories = (products) => {
-    return {
-        type: LOAD_CATEGORIES,
-        products
-    }
-}
-
-const loadCategoryProducts = (products) => {
+const loadCategoryProducts = (products, category) => {
     return {
         type: LOAD_CATEGORY_PRODUCTS,
-        products
+        products, category
     }
 }
 
@@ -94,23 +86,13 @@ export const loadOneProductThunk = (productId) => async(dispatch) => {
     }
 }
 
-export const loadCategoriesThunk = () => async(dispatch) => {
-    const res = await fetch(`/api/products/category`)
-
-    if (res.ok) {
-        const data = await res.json()
-        dispatch(loadCategories(data))
-        return data
-    }
-}
-
 export const loadCategoryProductsThunk = (category) => async(dispatch) => {
     const res = await fetch(`/api/products/category/${category}`)
 
     if (res.ok) {
         const data = await res.json()
-        data.product_categories = category
-        dispatch(loadCategoryProducts(data))
+        console.log(data)
+        dispatch(loadCategoryProducts(data.product_categories, category))
         return data
     }
 }
@@ -175,27 +157,25 @@ export const deleteProductThunk = (productId) => async(dispatch) => {
 const productReducer = (state = {}, action) => {
     switch(action.type) {
         case LOAD_PRODUCTS: {
-            const newState = {}
+            // we use the spread operator to keep copying over the old state
+            // this makes sure that all of our info stays consistent across pages and can help speed up navigation when revisiting pages we have already been to
+            const newState = {...state}
             action.products.products.forEach(product => {
                 newState[product.id] = product
             })
             return newState
         }
         case LOAD_ONE_PRODUCT: {
-            const newState = {}
+            const newState = {...state}
             newState[action.product.id] = action.product
             return newState
         }
-        case LOAD_CATEGORIES: {
-            const newState = {}
-            action.products.products.forEach(product => {
-                newState[product.id] = product
-            })
-            return newState
-        }
         case LOAD_CATEGORY_PRODUCTS: {
-            const newState = {...state}
-            newState[action.products.product_categories] = [action.products.products]
+            let newState = {...state}
+            newState[action.category] = {}
+            action.products.forEach(product => {
+                newState[action.category][product.id] = product
+            })
             return newState
         }
         // case LOAD_PRODUCT_IMAGES: {
@@ -206,7 +186,7 @@ const productReducer = (state = {}, action) => {
         //     return newState
         // }
         case MANAGE_PRODUCTS: {
-            const newState = {}
+            const newState = {...state}
             action.products.user_products.forEach(product => {
                 newState[product.id] = product
             })
@@ -223,6 +203,8 @@ const productReducer = (state = {}, action) => {
         case DELETE_PRODUCT: {
             const newState = { ...state }
             delete newState[action.productId]
+            // need this second delete so that we ensure that things delete from the local categories state at the same time they are deleted from the database and the overall state
+            delete newState[category][productId]
             return newState
         }
         default:
