@@ -21,7 +21,7 @@ function AllProducts() {
     return (
         <section className='all-products-section'>
             <div className='products-container'>
-                {users && productKeys.map((id) => (
+                {users && productKeys.reverse().map((id) => (
                     <ProductTile key={id} product={products[id]} seller={users[products[id]['seller_id']]} />
                 ))}
             </div>

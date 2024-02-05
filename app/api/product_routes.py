@@ -1,6 +1,6 @@
 from flask import Blueprint, request
-from app.models import db, Product
-from app.forms import ProductForm
+from app.models import db, Product, Review
+from app.forms import ProductForm, ReviewForm
 from flask_login import login_required, current_user
 from app.api.aws_routes import (upload_file_to_s3, get_unique_filename, remove_file_from_s3)
 
@@ -17,7 +17,7 @@ def product_detail(id):
     return product.to_dict()
 
 @product_routes.route('/category/<cate>')
-def productCategory(cate):
+def product_category(cate):
     product_categories = Product.query.filter_by(category=cate).all()
     return {'product_categories': [category.to_dict() for category in product_categories]}
 
@@ -43,17 +43,17 @@ def product_form():
         # if the dictionary doesn't have a url key
         # it means that there was an error when you tried to upload
         # so you send back that error message (and you printed it above)
-            return [upload], 401
+            return {'errors': {'message': 'error with upload'}}, 401
 
         url = upload['url']
 
         product = Product(
-            seller_id=current_user.id,
-            name=form.data['name'],
-            price=form.data['price'],
-            description=form.data['description'],
-            category=form.data['category'],
-            image=url
+            seller_id = current_user.id,
+            name = form.data['name'],
+            price = form.data['price'],
+            description = form.data['description'],
+            category = form.data['category'],
+            image = url
         )
 
         # productImage = ProductImage(
@@ -87,12 +87,12 @@ def product_update(id):
 
         url = upload['url']
 
-        product.seller_id=current_user.id
-        product.name=form.data['name']
-        product.price=form.data['price']
-        product.description=form.data['description']
-        product.category=form.data['category']
-        product.image=url
+        product.seller_id = current_user.id
+        product.name = form.data['name']
+        product.price = form.data['price']
+        product.description = form.data['description']
+        product.category = form.data['category']
+        product.image = url
 
         db.session.commit()
         return product.to_dict()
@@ -106,6 +106,57 @@ def delete_product(id):
     db.session.delete(product)
     db.session.commit()
     return 'Successfully Deleted'
+
+
+@product_routes.route('/<int:id>/reviews')
+def product_reviews(id):
+    reviews = Review.query.filter(Review.product_id == id).all()
+    return {'reviews': [review.to_dict() for review in reviews]}
+
+@product_routes.route('/<int:id>/reviews', methods=['POST'])
+@login_required
+def create_review(id):
+    product = Product.query.get(id)
+    form = ReviewForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        review = Review(
+            product_id = product.id,
+            creator_id = current_user.id,
+            review = form.data['review'],
+            stars = form.data['stars']
+        )
+        db.session.add(review)
+        db.session.commit()
+        return review.to_dict()
+    return form.errors, 401
+
+@product_routes.route('/<int:id>/reviews/<int:reviewId>', methods=['PUT'])
+@login_required
+def edit_review(id, reviewId):
+    product = Product.query.get(id)
+    review = Review.query.get(reviewId)
+    form = ReviewForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        review.product_id = product.id
+        review.creator_id = current_user.id
+        review.review = form.data['review']
+        review.stars = form.data['stars']
+
+        db.session.commit()
+        return review.to_dict()
+    return form.errors, 401
+
+@product_routes.route('/<int:id>/reviews/<int:reviewId>', methods=['DELETE'])
+@login_required
+def delete_review(id, reviewId):
+    product = Product.query.get(id)
+    review = Review.query.get(reviewId)
+    db.session.delete(review)
+    db.session.commit()
+    return 'Successfully Deleted'
+
 
 # @product_routes.route('/images')
 # def images():

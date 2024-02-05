@@ -4,6 +4,7 @@ import './ProductDetails.css'
 import { useEffect } from 'react';
 import { loadOneProductThunk } from '../../redux/product';
 import { loadUsersThunk } from '../../redux/user';
+import ProductReviews from '../ProductReviews/ProductReviews';
 
 function ProductDetails() {
     const dispatch = useDispatch()
@@ -33,6 +34,7 @@ function ProductDetails() {
                 <h4>Product Details</h4>
                 <p className='product-description'>{product.description}</p>
             </div>
+            <ProductReviews />
         </section>
     )
 }
