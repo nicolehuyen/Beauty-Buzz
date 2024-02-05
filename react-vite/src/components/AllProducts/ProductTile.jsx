@@ -1,5 +1,4 @@
 export default function ProductTile({product, seller}) {
-    console.log('product', product)
     return (
         <>
         <div className='product-tile'>
