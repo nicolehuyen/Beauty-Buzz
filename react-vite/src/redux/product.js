@@ -204,7 +204,7 @@ const productReducer = (state = {}, action) => {
             const newState = { ...state }
             delete newState[action.productId]
             // need this second delete so that we ensure that things delete from the local categories state at the same time they are deleted from the database and the overall state
-            delete newState[category][productId]
+            // delete newState[category][productId]
             return newState
         }
         default:
