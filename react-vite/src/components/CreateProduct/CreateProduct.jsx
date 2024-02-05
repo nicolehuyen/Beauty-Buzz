@@ -20,11 +20,11 @@ function CreateProduct() {
         if(!sessionUser) navigate('/')
         const newErrors = {}
 
-        if(!name) newErrors.name = 'Name is required'
-        if(!Number(price)) newErrors.price = 'Price is required'
-        if(!description) newErrors.description = 'Description is required'
+        if(!name) newErrors.name = 'Name is required.'
+        if(!Number(price)) newErrors.price = 'Price is required.'
+        if(!description) newErrors.description = 'Description is required.'
         // if(!category) newErrors.category = 'Category is required'
-        if(!image || !image?.name.endsWith('.png') && !image?.name.endsWith('.jpg') && !image?.name.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format'
+        if(!image || !image?.name.endsWith('.png') && !image?.name.endsWith('.jpg') && !image?.name.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format.'
 
         setErrors(newErrors)
     }, [sessionUser, navigate, name, price, description, image])
