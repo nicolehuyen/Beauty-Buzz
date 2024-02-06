@@ -1,3 +1,67 @@
+* {
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 30px;
+  border-bottom: 1px solid rgb(224, 224, 224);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+}
+
+.logo-title {
+  height: 60px;
+  cursor: pointer;
+}
+
+.categories {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+.cate-title {
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.cate-title:hover {
+  padding-bottom: 27px;
+  border-bottom: 3px solid black;
+  transition: all ease 0.3s;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+
+.fa-user-circle, .fa-bag-shopping {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.fa-user-circle:hover, .fa-bag-shopping:hover {
+  padding-bottom: 27px;
+  border-bottom: 3px solid black;
+  transition: all ease 0.3s;
+}
+
 .profile-dropdown {
   position: absolute;
 }

@@ -40,18 +40,18 @@ function ProfileButton() {
 
   return (
     <>
-      <button onClick={toggleMenu}>
+      <span onClick={toggleMenu}>
         <i className="fas fa-user-circle" />
-      </button>
+      </span>
       {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
+        <span className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
+              <span>{user.username}</span>
+              <span>{user.email}</span>
+              <span>
                 <button onClick={logout}>Log Out</button>
-              </li>
+              </span>
             </>
           ) : (
             <>
@@ -67,7 +67,7 @@ function ProfileButton() {
               />
             </>
           )}
-        </ul>
+        </span>
       )}
     </>
   );
