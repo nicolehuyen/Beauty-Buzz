@@ -35,7 +35,7 @@ def seed_products():
         image='https://beauty-buzz-images.s3.us-east-2.amazonaws.com/setting-spray.png'
     )
     eyes1 = Product(
-        seller_id=1,
+        seller_id=2,
         name='Better Than Sex Volumizing & Lengthening Mascara',
         price=29.00,
         description='Too Faced Better Than Sex Volumizing Mascara is an intensely black volumizing and lengthening mascara for the sexiest, most defined lashes possible.',
@@ -43,7 +43,7 @@ def seed_products():
         image='https://beauty-buzz-images.s3.us-east-2.amazonaws.com/mascara.png'
     )
     eyes2 = Product(
-        seller_id=2,
+        seller_id=1,
         name='Brow Powder Duo Color Compact',
         price=23.00,
         description='Brow Powder Duo by Anastasia Beverly Hills is a versatile dual-sided brow powder that is easy to apply and blend to quickly create natural-looking brows. Featuring a finely milled, buildable formula, this compact can be used to perfect the ombré brow look or mixed together for customizable color.',

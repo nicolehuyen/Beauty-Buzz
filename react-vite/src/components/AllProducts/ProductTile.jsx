@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function ProductTile({product, seller, reviews}) {
+export default function ProductTile({product, seller}) {
     const navigate = useNavigate()
 
     return (

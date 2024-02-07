@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { manageProductsThunk } from "../../redux/product"
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import DeleteProduct from "../DeleteProduct/DeleteProduct"
+import './ManageProducts.css'
 
 function ManageProducts() {
     const navigate = useNavigate()
@@ -23,15 +24,17 @@ function ManageProducts() {
                 <div className="manage-products-section">
                     <div className="manage-products-container">
                         <h1 className="manage-title">Manage Your Products</h1>
-                        <button className='create-new-product-button' onClick={() => navigate('/products/new')}>Create a New Makeup Product</button>
+                        <div className="create-button">
+                            <button className='create-new-product-button' onClick={() => navigate('/products/new')}>Create New Product</button>
+                        </div>
                     </div>
                     <div className="products-container">
                         {products.map((product) => (
                             <div key={product.id}>
-                                <div className='product-tile'>
+                                <div style={{height: 440}} className='product-tile' onClick={() => navigate(`/products/${product?.id}`)}>
                                     <img className='product-image' src={product?.image} alt='product-image' />
-                                    <h3 className='product-name'>{product?.name}</h3>
-                                    <span className='product-price'>{`$${product?.price}`}</span>
+                                    <h4 style={{paddingTop: 10}} className='product-name'>{product?.name}</h4>
+                                    <span className='product-price'>{`$${Number(product?.price).toFixed(2)}`}</span>
                                 </div>
                                 <div className="manage-buttons">
                                     <button className='update-product-button' onClick={() => navigate(`/products/${product.id}/edit`)}>Update</button>

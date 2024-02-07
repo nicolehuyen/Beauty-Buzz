@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import './ProductCategory.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { loadCategoryProductsThunk } from '../../redux/product'

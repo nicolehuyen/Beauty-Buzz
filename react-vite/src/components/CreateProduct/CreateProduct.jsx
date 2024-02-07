@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createProductThunk } from "../../redux/product";
 import { useNavigate } from "react-router-dom";
+import './CreateProduct.css'
 
 function CreateProduct() {
     const navigate = useNavigate()
@@ -23,7 +24,7 @@ function CreateProduct() {
         if(!name) newErrors.name = 'Name is required.'
         if(!Number(price)) newErrors.price = 'Price is required.'
         if(!description) newErrors.description = 'Description is required.'
-        // if(!category) newErrors.category = 'Category is required'
+        if(!category) newErrors.category = 'Category is required.'
         if(!image || !image?.name.endsWith('.png') && !image?.name.endsWith('.jpg') && !image?.name.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format.'
 
         setErrors(newErrors)
@@ -52,68 +53,70 @@ function CreateProduct() {
     return (
         <>
         {sessionUser && (
-            <div className="create-product">
+            <div className="create-product-section">
                 <div className="create-prod-box">
-                    <h1>Create a New Makeup Product</h1>
-                    <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    <h2 style={{paddingBottom: 20}}>Create a new makeup product</h2>
+                    <form onSubmit={handleSubmit} encType="multipart/form-data" className="product-form">
                         <div className="entry-container">
-                            <h2>Name</h2>
-                            {submitted && errors.name && <p style={{color: 'red'}}>{errors.name}</p>}
+                            <h4 className="input-title">Product name</h4>
                             <input
-                                className="product-inputs"
+                                className="form-input"
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
+                            <div style={{minHeight: 30}}>{submitted && errors.name ? <span className="error">{errors.name}</span> : ' '}</div>
+                        </div>
+                        <div className="cate-price">
+                            <div className="entry-container cate-field">
+                                <h4 className="input-title">Category</h4>
+                                <select
+                                    className="form-input cate-input"
+                                    value={category}
+                                    // defaultValue={category}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                >
+                                    <option value={"face"}>Face</option>
+                                    <option value={"eyes"}>Eyes</option>
+                                    <option value={"lips"}>Lips</option>
+                                    <option value={"cheeks"}>Cheeks</option>
+                                    <option value={"brushes&tools"}>Brushes & Tools</option>
+                                </select>
+                                <div style={{minHeight: 30}}>{submitted && errors.category ? <span className="error">{errors.category}</span> : ' '}</div>
+                            </div>
+                            <div className="entry-container">
+                                <h4 className="input-title">Price</h4>
+                                <input
+                                    className="form-input"
+                                    type="number"
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                />
+                                <div style={{minHeight: 30}}>{submitted && errors.price ? <span className="error">{errors.price}</span> : ' '}</div>
+                            </div>
                         </div>
                         <div className="entry-container">
-                            <h2>Price</h2>
-                            {submitted && errors.price && <p style={{color: 'red'}}>{errors.price}</p>}
-                            <input
-                                className="product-inputs"
-                                type="number"
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
-                            />
-                        </div>
-                        <div className="entry-container">
-                            <h2>Description</h2>
-                            {submitted && errors.description && <p style={{color: 'red'}}>{errors.description}</p>}
-                            <input
-                                className="product-inputs"
+                            <h4 className="input-title">Description</h4>
+                            <p style={{fontSize: 13, paddingBottom: 10}}>Start with a summary that describes your product&apos;s finest features. Other information you can include is how to use your product and it&apos;s ingredients.</p>
+                            <textarea
+                                className="form-input text-box"
                                 type="text"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
+                            <div style={{minHeight: 30}}>{submitted && errors.description ? <span className="error">{errors.description}</span> : ' '}</div>
                         </div>
                         <div className="entry-container">
-                            <h2>Category</h2>
-                            {submitted && errors.category && <p style={{color: 'red'}}>{errors.category}</p>}
-                            <select
-                                className="product-inputs"
-                                value={category}
-                                // defaultValue={category}
-                                onChange={(e) => setCategory(e.target.value)}
-                            >
-                                <option value={"face"}>Face</option>
-                                <option value={"eyes"}>Eyes</option>
-                                <option value={"lips"}>Lips</option>
-                                <option value={"cheeks"}>Cheeks</option>
-                                <option value={"brushes&tools"}>Brushes & Tools</option>
-                            </select>
-                        </div>
-                        <div className="entry-container">
-                            <h2>Image</h2>
-                            {submitted && errors.image && <p style={{color: 'red'}}>{errors.image}</p>}
+                            <h4 className="input-title">Image</h4>
                             <input
-                                className="product-inputs"
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => setImage(e.target.files[0])}
                             />
+                            <div style={{minHeight: 30}}>{submitted && errors.image ? <span className="error">{errors.image}</span> : ' '}</div>
                         </div>
-                        <div className="create-button">
-                            <button type="submit">Submit</button>
+                        <div className="create-button-div">
+                            <button className='create-prod-button' type="submit">Create Product</button>
                         </div>
                         {(imageLoading) && <p className="loading-text">Loading...</p>}
                     </form>
