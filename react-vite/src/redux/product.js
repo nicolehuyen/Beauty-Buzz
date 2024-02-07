@@ -158,7 +158,7 @@ const productReducer = (state = {}, action) => {
         case LOAD_PRODUCTS: {
             // we use the spread operator to keep copying over the old state
             // this makes sure that all of our info stays consistent across pages and can help speed up navigation when revisiting pages we have already been to
-            const newState = {...state}
+            const newState = {}
             action.products.products.forEach(product => {
                 newState[product.id] = product
             })

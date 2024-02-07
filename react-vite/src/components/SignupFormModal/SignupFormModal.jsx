@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { thunkSignup } from "../../redux/session";
 import * as sessionActions from '../../redux/session';
-import "./SignupForm.css";
+import "../LoginFormModal/LoginForm.css";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
@@ -71,8 +71,8 @@ function SignupFormModal() {
   return (
     <div className="login-modal">
       <h2>Create your account</h2>
-      <p style={{paddingTop: 3, paddingBottom: 10}}>Registration is easy.</p>
-      {errors.server && <span className="error">{errors.server}</span>}
+      <p style={{paddingTop: 3}}>Registration is easy.</p>
+      <div style={{minHeight: 30}}>{errors.server ? <span className="error">{errors.server}</span> : ' '}</div>
       <form onSubmit={handleSubmit} className="sign-in-form">
         <label className="form-label">
           First name
@@ -84,7 +84,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.first_name && <span className="error">{errors.first_name}</span>}
+        <div style={{minHeight: 30}}>{errors.first_name ? <span className="error">{errors.first_name}</span> : ' '}</div>
         <label className="form-label">
           Last name
           <input
@@ -95,6 +95,7 @@ function SignupFormModal() {
             required
           />
         </label>
+        <div style={{minHeight: 30}}>{errors.last_name ? <span className="error">{errors.last_name}</span> : ' '}</div>
         <label className="form-label">
           Email address
           <input
@@ -105,7 +106,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.email && <span className="error">{errors.email}</span>}
+        <div style={{minHeight: 30}}>{errors.email ? <span className="error">{errors.email}</span> : ' '}</div>
         <label className="form-label">
           Password
           <input
@@ -116,7 +117,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.password && <span className="error">{errors.password}</span>}
+        <div style={{minHeight: 30}}>{errors.password ? <span className="error">{errors.password}</span> : ' '}</div>
         <label className="form-label">
           Confirm password
           <input
@@ -127,7 +128,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
+        <div style={{minHeight: 30}}>{errors.confirmPassword ? <span className="error">{errors.confirmPassword}</span> : ' '}</div>
         <div className="login-div">
           <button className="login-button" type="submit">Register</button>
           <button className='demo-user-login' onClick={demoUserLogin}>Demo User</button>

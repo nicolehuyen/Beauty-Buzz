@@ -1,16 +1,14 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { loadProductReviewsThunk } from "../../redux/review"
-import { useParams } from "react-router-dom"
 import { loadUsersThunk } from "../../redux/user"
 import OpenModalButton from "../OpenModalButton/OpenModalButton"
 import CreateReview from "../CreateReview/CreateReview"
 import UpdateReview from "../UpdateReview/UpdateReview"
 import DeleteReview from "../DeleteReview/DeleteReview"
 
-function ProductReviews() {
+function ProductReviews({productId}) {
     const dispatch = useDispatch()
-    const { productId } = useParams()
     const reviewsObj = useSelector(state => state.review)
     const reviews = Object.values(reviewsObj)
     const user = useSelector(state => state.user)
@@ -42,9 +40,36 @@ function ProductReviews() {
         return year
     }
 
+    function averageRating() {
+        if(!reviews) return 0
+        const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0)
+        const averageRating = totalStars / reviews.length
+        return averageRating
+    }
+
     return (
         <section className="product-reviews">
-            <OpenModalButton buttonText={"Add a review"} modalComponent={<CreateReview productId={productId}/>}/>
+            <div className="review-title">
+                <h2>Reviews</h2>
+                <OpenModalButton buttonText={"WRITE A REVIEW"} modalComponent={<CreateReview productId={productId}/>}/>
+            </div>
+            <div className="average-rating">
+                <h2>{(() => {
+                    const stars = [];
+                    for (let i = 0; i < 5; i++) {
+                        if (i < Math.floor(averageRating())) {
+                            stars.push(<i key={i} className="fas fa-star"></i>)
+                        } else if (i === Math.floor(averageRating()) && averageRating() % 1 !== 0) {
+                            stars.push(<i key={i} className="fas fa-star-half-alt"></i>)
+                        } else {
+                            stars.push(<i key={i} className="far fa-star"></i>)
+                        }
+                    }
+                    return stars
+                })()}</h2>
+                <h2>{averageRating().toFixed(1)}</h2>
+                <p>{reviews.length} Reviews</p>
+            </div>
             {reviews.reverse().map(review => (
                 <div key={review.id}>
                     {(() => {

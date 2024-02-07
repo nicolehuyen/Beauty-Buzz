@@ -71,7 +71,7 @@ def seed_products():
         name='Addict Lip Glow Oil',
         price=40.00,
         description='Dior Addict Lip Glow Oil is a nourishing, glossy lip oil that protects and enhances the lips, bringing out their natural color.',
-        category='eyes',
+        category='lips',
         image='https://beauty-buzz-images.s3.us-east-2.amazonaws.com/dior-lip.png'
     )
     lips2 = Product(

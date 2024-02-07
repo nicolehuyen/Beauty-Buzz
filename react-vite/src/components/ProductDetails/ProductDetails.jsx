@@ -34,7 +34,7 @@ function ProductDetails() {
                 <h4>Product Details</h4>
                 <p className='product-description'>{product.description}</p>
             </div>
-            <ProductReviews />
+            <ProductReviews productId={productId}/>
         </section>
     )
 }

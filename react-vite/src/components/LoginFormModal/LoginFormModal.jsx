@@ -53,7 +53,7 @@ function LoginFormModal() {
       <div className="top-modal">
         <div className="sign-in-title">
           <h2>Sign in</h2>
-          <p style={{paddingTop: 3}}>Hey there! Sign in to access Beauty Buzz.</p>
+          <p style={{paddingTop: 3, paddingBottom: 15}}>Hey there! Sign in to access Beauty Buzz.</p>
         </div>
         <div className="register-div">
           <button className='register-button' onClick={(e) => signup(e)}>Register</button>
@@ -70,7 +70,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.email && <span className="error">{errors.email}</span>}
+        <div style={{minHeight: 30}}>{errors.email ? <span className="error">{errors.email}</span> : ' '}</div>
         <label className="form-label">
           Password
           <input
@@ -81,7 +81,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.password && <span className="error">{errors.password}</span>}
+        <div style={{minHeight: 30}}>{errors.password ? <span className="error">{errors.password}</span> : ' '}</div>
         <div className="login-div">
           <button className="login-button" type="submit">Sign in</button>
           <button className='demo-user-login' onClick={demoUserLogin}>Demo User</button>

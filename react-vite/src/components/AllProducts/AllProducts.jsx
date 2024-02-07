@@ -8,8 +8,8 @@ import { loadUsersThunk } from '../../redux/user'
 function AllProducts() {
     const dispatch = useDispatch()
     const products = useSelector(state => state.product)
-    const users = useSelector(state => state.user)
     const productKeys = Object.keys(products)
+    const users = useSelector(state => state.user)
 
     useEffect(() => {
         dispatch(loadProductsThunk())

@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkLogout } from "../../redux/session";
-import OpenModalMenuItem from "./OpenModalMenuItem";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
+import { useNavigate } from "react-router-dom";
 
 function ProfileButton() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
@@ -34,8 +33,7 @@ function ProfileButton() {
 
   const logout = (e) => {
     e.preventDefault();
-    dispatch(thunkLogout());
-    closeMenu();
+    dispatch(thunkLogout()).then(navigate('/')).then(closeMenu())
   };
 
   return (
@@ -45,26 +43,20 @@ function ProfileButton() {
       </span>
       {showMenu && (
         <span className={"profile-dropdown"} ref={ulRef}>
-          {user ? (
+          {user && (
             <>
-              <span>{user.username}</span>
-              <span>{user.email}</span>
-              <span>
-                <button onClick={logout}>Log Out</button>
-              </span>
-            </>
-          ) : (
-            <>
-              <OpenModalMenuItem
-                itemText="Log In"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-              <OpenModalMenuItem
-                itemText="Sign Up"
-                onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-              />
+              <div className="profile-user">
+                <i className="fa-solid fa-user profile-icon"></i>
+                <span>{user.first_name} {user.last_name}</span>
+              </div>
+              <div className="profile-user-info">
+                <i className="fa-solid fa-list-check profile-icon"></i>
+                <span onClick={() => navigate('/products/manage')}>Manage products</span>
+              </div>
+              <div className="profile-user-info">
+                <i className="fa-solid fa-right-from-bracket profile-icon"></i>
+                <span onClick={logout}>Sign out</span>
+              </div>
             </>
           )}
         </span>
