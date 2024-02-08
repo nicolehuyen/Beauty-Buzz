@@ -70,12 +70,12 @@ function SignupFormModal() {
 
   return (
     <div className="login-modal">
-      <h2>Create your account</h2>
+      <h2>Create Your Account</h2>
       <p style={{paddingTop: 3}}>Registration is easy.</p>
       <div style={{minHeight: 30}}>{errors.server ? <span className="error">{errors.server}</span> : ' '}</div>
       <form onSubmit={handleSubmit} className="sign-in-form">
         <label className="form-label">
-          First name
+          First Name
           <input
             className="form-input"
             type="text"
@@ -86,7 +86,7 @@ function SignupFormModal() {
         </label>
         <div style={{minHeight: 30}}>{errors.first_name ? <span className="error">{errors.first_name}</span> : ' '}</div>
         <label className="form-label">
-          Last name
+          Last Name
           <input
             className="form-input"
             type="text"
@@ -97,7 +97,7 @@ function SignupFormModal() {
         </label>
         <div style={{minHeight: 30}}>{errors.last_name ? <span className="error">{errors.last_name}</span> : ' '}</div>
         <label className="form-label">
-          Email address
+          Email Address
           <input
             className="form-input"
             type="text"
@@ -119,7 +119,7 @@ function SignupFormModal() {
         </label>
         <div style={{minHeight: 30}}>{errors.password ? <span className="error">{errors.password}</span> : ' '}</div>
         <label className="form-label">
-          Confirm password
+          Confirm Password
           <input
             className="form-input"
             type="password"

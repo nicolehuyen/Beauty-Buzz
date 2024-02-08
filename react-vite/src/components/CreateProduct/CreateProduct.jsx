@@ -21,11 +21,15 @@ function CreateProduct() {
         if(!sessionUser) navigate('/')
         const newErrors = {}
 
-        if(!name) newErrors.name = 'Name is required.'
+        if(!name) newErrors.name = 'Product name is required.'
+        if(String(name).length > 140) newErrors.name = 'Product name cannot exceed 140 characters.'
+        // if(!category) newErrors.category = 'Category is required.'
         if(!Number(price)) newErrors.price = 'Price is required.'
+        if(Number(price) > 999) newErrors.price = 'Price cannot exceed $999.'
+        if(Number(price) < 1) newErrors.price = 'Price must be at least $1.'
         if(!description) newErrors.description = 'Description is required.'
-        if(!category) newErrors.category = 'Category is required.'
-        if(!image || !image?.name.endsWith('.png') && !image?.name.endsWith('.jpg') && !image?.name.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format.'
+        if(String(description).length < 30) newErrors.description = 'Description must be at least 30 characters.'
+        if(!image || !image?.name?.endsWith('.png') && !image?.name?.endsWith('.jpg') && !image?.name?.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format.'
 
         setErrors(newErrors)
     }, [sessionUser, navigate, name, price, description, image])
@@ -38,15 +42,15 @@ function CreateProduct() {
         if(!Object.values(errors).length) {
             const formData = new FormData()
             formData.append('name', name)
+            formData.append('category', category)
             formData.append('price', price)
             formData.append('description', description)
-            formData.append('category', category)
             formData.append('image', image)
             // aws uploads can be a bit slow—displaying
             // some sort of loading message is a good idea
             setImageLoading(true)
             await dispatch(createProductThunk(formData))
-            navigate(`/products`)
+            navigate(`/products/manage`)
         }
     }
 
@@ -55,10 +59,10 @@ function CreateProduct() {
         {sessionUser && (
             <div className="create-product-section">
                 <div className="create-prod-box">
-                    <h2 style={{paddingBottom: 20}}>Create a new makeup product</h2>
+                    <h2 style={{paddingBottom: 20}}>Create a New Makeup Product</h2>
                     <form onSubmit={handleSubmit} encType="multipart/form-data" className="product-form">
                         <div className="entry-container">
-                            <h4 className="input-title">Product name</h4>
+                            <h4 className="input-title">Product Name</h4>
                             <input
                                 className="form-input"
                                 type="text"
@@ -118,7 +122,7 @@ function CreateProduct() {
                         <div className="create-button-div">
                             <button className='create-prod-button' type="submit">Create Product</button>
                         </div>
-                        {(imageLoading) && <p className="loading-text">Loading...</p>}
+                        <div style={{minHeight: 30}}>{imageLoading ? <p className="loading-text">Loading...</p> : ' '}</div>
                     </form>
                 </div>
             </div>

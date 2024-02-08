@@ -118,7 +118,7 @@ def seed_products():
         seller_id=3,
         name='Sun Stalk\'r Instant Warmth Bronzer',
         price=35.00,
-        description='The FENTY BEAUTY by Rihanna Sun Stalk\'r Instant Warmth Bronzer is a longwear, transfer-resistant bronzing powder in 8 groundbreaking shades, each carefully curated to bring all skin tones to life with an instant sun-soaked glow',
+        description='The FENTY BEAUTY by Rihanna Sun Stalk\'r Instant Warmth Bronzer is a longwear, transfer-resistant bronzing powder in 8 groundbreaking shades, each carefully curated to bring all skin tones to life with an instant sun-soaked glow.',
         category='cheeks',
         image='https://beauty-buzz-images.s3.us-east-2.amazonaws.com/fenty-bronzer.png'
     )

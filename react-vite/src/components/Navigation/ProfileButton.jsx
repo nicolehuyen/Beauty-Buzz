@@ -51,11 +51,11 @@ function ProfileButton() {
               </div>
               <div className="profile-user-info">
                 <i className="fa-solid fa-list-check profile-icon"></i>
-                <span onClick={() => navigate('/products/manage')}>Manage products</span>
+                <span onClick={() => { navigate('/products/manage'); closeMenu(); }}>Manage Products</span>
               </div>
               <div className="profile-user-info">
                 <i className="fa-solid fa-right-from-bracket profile-icon"></i>
-                <span onClick={logout}>Sign out</span>
+                <span onClick={logout}>Sign Out</span>
               </div>
             </>
           )}

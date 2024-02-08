@@ -52,7 +52,7 @@ function LoginFormModal() {
     <div className="login-modal">
       <div className="top-modal">
         <div className="sign-in-title">
-          <h2>Sign in</h2>
+          <h2>Sign In</h2>
           <p style={{paddingTop: 3, paddingBottom: 15}}>Hey there! Sign in to access Beauty Buzz.</p>
         </div>
         <div className="register-div">
@@ -61,7 +61,7 @@ function LoginFormModal() {
       </div>
       <form onSubmit={handleSubmit} className="sign-in-form">
         <label className="form-label">
-          Email address
+          Email Address
           <input
             className="form-input"
             type="text"
@@ -83,7 +83,7 @@ function LoginFormModal() {
         </label>
         <div style={{minHeight: 30}}>{errors.password ? <span className="error">{errors.password}</span> : ' '}</div>
         <div className="login-div">
-          <button className="login-button" type="submit">Sign in</button>
+          <button className="login-button" type="submit">Sign In</button>
           <button className='demo-user-login' onClick={demoUserLogin}>Demo User</button>
         </div>
       </form>

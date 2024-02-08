@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { loadProductReviewsThunk } from "../../redux/review"
 import { loadUsersThunk } from "../../redux/user"
 import OpenModalButton from "../OpenModalButton/OpenModalButton"
+import ReviewModalButton from "./ReviewModalButton"
 import CreateReview from "../CreateReview/CreateReview"
 import UpdateReview from "../UpdateReview/UpdateReview"
 import DeleteReview from "../DeleteReview/DeleteReview"
+import './ProductReviews.css'
 
-function ProductReviews({productId}) {
+function ProductReviews({productId, product}) {
     const dispatch = useDispatch()
     const reviewsObj = useSelector(state => state.review)
     const reviews = Object.values(reviewsObj)
@@ -51,7 +53,7 @@ function ProductReviews({productId}) {
         <section className="product-reviews">
             <div className="review-title">
                 <h2>Reviews</h2>
-                <OpenModalButton buttonText={"WRITE A REVIEW"} modalComponent={<CreateReview productId={productId}/>}/>
+                {sessionUser && sessionUser?.id !== product?.seller_id && (<ReviewModalButton buttonText={"WRITE A REVIEW"} modalComponent={<CreateReview productId={productId}/>}/>)}
             </div>
             <div className="average-rating">
                 <h2>{(() => {
@@ -67,19 +69,19 @@ function ProductReviews({productId}) {
                     }
                     return stars
                 })()}</h2>
-                <h2>{averageRating().toFixed(1)}</h2>
-                <p>{reviews.length} Reviews</p>
+                <h1 className="avg-rate">{averageRating().toFixed(1)}</h1>
+                <p>{reviews?.length <= 1 ? `${reviews?.length} Review` : `${reviews?.length} Reviews`}</p>
             </div>
             {reviews.reverse().map(review => (
-                <div key={review.id}>
-                    {(() => {
+                <div className='reviewers-review' key={review.id}>
+                    <p>{(() => {
                         const stars = [];
                         for (let i = 0; i < 5; i++) {
-                            const starClass = i < review.stars ? "fa-solid" : "fa-regular";
+                            const starClass = i < review?.stars ? "fa-solid" : "fa-regular";
                             stars.push(<i key={i} className={`fa ${starClass} fa-star`}></i>);
                         }
                         return stars
-                    })()}
+                    })()}</p>
                     <p className="review-text">{review?.review}</p>
                     <div className="name-date">
                         <p className="reviewer-name">{user[review?.creator_id]?.first_name}</p>

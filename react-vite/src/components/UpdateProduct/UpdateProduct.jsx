@@ -22,11 +22,14 @@ function UpdateProduct() {
         if(!sessionUser) navigate('/')
         const newErrors = {}
 
-        if(!name) newErrors.name = 'Name is required'
-        if(!Number(price)) newErrors.price = 'Price is required'
-        if(!description) newErrors.description = 'Description is required'
-        // if(!category) newErrors.category = 'Category is required'
-        if(!image || !image?.name?.endsWith('.png') && !image?.name?.endsWith('.jpg') && !image?.name?.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format'
+        if(!name) newErrors.name = 'Product name is required.'
+        if(String(name).length > 140) newErrors.name = 'Product name cannot exceed 140 characters.'
+        // if(!category) newErrors.category = 'Category is required.'
+        if(!Number(price)) newErrors.price = 'Price is required.'
+        if(Number(price) > 999) newErrors.price = 'Price cannot exceed $999.'
+        if(!description) newErrors.description = 'Description is required.'
+        if(String(description).length < 30) newErrors.description = 'Description must be at least 30 characters.'
+        if(!image || !image?.name?.endsWith('.png') && !image?.name?.endsWith('.jpg') && !image?.name?.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format.'
 
         setErrors(newErrors)
     }, [sessionUser, navigate, name, price, description, image])
@@ -38,9 +41,9 @@ function UpdateProduct() {
     useEffect(() => {
         if(product) {
             setName(product?.name || '')
+            setCategory(product?.category || '')
             setPrice(product?.price || '')
             setDescription(product?.description || '')
-            setCategory(product?.category || '')
             setImage(product?.image || '')
         }
     }, [product])
@@ -53,85 +56,87 @@ function UpdateProduct() {
         if(!Object.values(errors).length) {
             const formData = new FormData()
             formData.append('name', name)
+            formData.append('category', category)
             formData.append('price', price)
             formData.append('description', description)
-            formData.append('category', category)
             formData.append('image', image)
             // aws uploads can be a bit slow—displaying
             // some sort of loading message is a good idea
             setImageLoading(true)
             await dispatch(updateProductThunk(formData, productId))
-            navigate(`/products/${productId}`)
+            navigate(`/products/manage`)
         }
     }
 
     return (
         <>
         {sessionUser && (
-            <div className="create-product">
+            <div className="create-product-section">
                 <div className="create-prod-box">
-                    <h1>Update Your Makeup Product</h1>
-                    <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    <h2 style={{paddingBottom: 20}}>Update Your Makeup Product</h2>
+                    <form onSubmit={handleSubmit} encType="multipart/form-data" className="product-form">
                         <div className="entry-container">
-                            <h2>Name</h2>
-                            {submitted && errors.name && <p style={{color: 'red'}}>{errors.name}</p>}
+                            <h4 className="input-title">Product Name</h4>
                             <input
-                                className="product-inputs"
+                                className="form-input"
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
+                            <div style={{minHeight: 30}}>{submitted && errors.name ? <span className="error">{errors.name}</span> : ' '}</div>
+                        </div>
+                        <div className="cate-price">
+                            <div className="entry-container cate-field">
+                                <h4 className="input-title">Category</h4>
+                                <select
+                                    className="form-input cate-input"
+                                    value={category}
+                                    // defaultValue={category}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                >
+                                    <option value={"face"}>Face</option>
+                                    <option value={"eyes"}>Eyes</option>
+                                    <option value={"lips"}>Lips</option>
+                                    <option value={"cheeks"}>Cheeks</option>
+                                    <option value={"brushes&tools"}>Brushes & Tools</option>
+                                </select>
+                                <div style={{minHeight: 30}}>{submitted && errors.category ? <span className="error">{errors.category}</span> : ' '}</div>
+                            </div>
+                            <div className="entry-container">
+                                <h4 className="input-title">Price</h4>
+                                <input
+                                    className="form-input"
+                                    type="number"
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                />
+                                <div style={{minHeight: 30}}>{submitted && errors.price ? <span className="error">{errors.price}</span> : ' '}</div>
+                            </div>
                         </div>
                         <div className="entry-container">
-                            <h2>Price</h2>
-                            {submitted && errors.price && <p style={{color: 'red'}}>{errors.price}</p>}
-                            <input
-                                className="product-inputs"
-                                type="number"
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
-                            />
-                        </div>
-                        <div className="entry-container">
-                            <h2>Description</h2>
-                            {submitted && errors.description && <p style={{color: 'red'}}>{errors.description}</p>}
-                            <input
-                                className="product-inputs"
+                            <h4 className="input-title">Description</h4>
+                            <p style={{fontSize: 13, paddingBottom: 10}}>Start with a summary that describes your product&apos;s finest features. Other information you can include is how to use your product and it&apos;s ingredients.</p>
+                            <textarea
+                                className="form-input text-box"
                                 type="text"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
+                            <div style={{minHeight: 30}}>{submitted && errors.description ? <span className="error">{errors.description}</span> : ' '}</div>
                         </div>
                         <div className="entry-container">
-                            <h2>Category</h2>
-                            {submitted && errors.category && <p style={{color: 'red'}}>{errors.category}</p>}
-                            <select
-                                className="product-inputs"
-                                value={category}
-                                // defaultValue={category}
-                                onChange={(e) => setCategory(e.target.value)}
-                            >
-                                <option value={"face"}>Face</option>
-                                <option value={"eyes"}>Eyes</option>
-                                <option value={"lips"}>Lips</option>
-                                <option value={"cheeks"}>Cheeks</option>
-                                <option value={"brushes&tools"}>Brushes & Tools</option>
-                            </select>
-                        </div>
-                        <div className="entry-container">
-                            <h2>Image</h2>
-                            {submitted && errors.image && <p style={{color: 'red'}}>{errors.image}</p>}
+                            <h4 className="input-title">Image</h4>
                             <input
-                                className="product-inputs"
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => setImage(e.target.files[0])}
                             />
+                            <div style={{minHeight: 30}}>{submitted && errors.image ? <span className="error">{errors.image}</span> : ' '}</div>
                         </div>
-                        <div className="create-button">
-                            <button type="submit">Update</button>
+                        <div className="create-button-div">
+                            <button className='create-prod-button' type="submit">Update Product</button>
                         </div>
-                        {(imageLoading) && <p className="loading-text">Loading...</p>}
+                        <div style={{minHeight: 30}}>{imageLoading ? <p className="loading-text">Loading...</p> : ' '}</div>
                     </form>
                 </div>
             </div>

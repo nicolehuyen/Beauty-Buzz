@@ -13,17 +13,17 @@ function DeleteProduct({productId}) {
         e.preventDefault()
 
         await dispatch(deleteProductThunk(productId)).then(closeModal())
-        navigate('/products')
+        navigate('/products/manage')
     }
 
     return (
         <div className="delete-product-modal">
             <div className="delete-info-modal">
                 <h2 className="delete-header-text">Confirm Delete</h2>
-                <p className="delete-text">Are you sure you want to remove this product from the listings?</p>
+                <p className="delete-text">Are you sure you want to remove this product?</p>
                 <div className="delete-buttons-holder">
                     <button className="delete-modal-button" onClick={handleDelete}>Delete</button>
-                    <button className='cancel-modal-button' onClick={closeModal}>Cancel</button>
+                    <button className='delete-modal-button' onClick={closeModal}>Cancel</button>
                 </div>
             </div>
         </div>
