@@ -1,11 +1,9 @@
-import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux";
 import './DeleteProduct.css'
 import { useModal } from '../../context/Modal'
 import { deleteProductThunk } from "../../redux/product";
 
 function DeleteProduct({productId}) {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     const { closeModal } = useModal()
 
@@ -13,7 +11,6 @@ function DeleteProduct({productId}) {
         e.preventDefault()
 
         await dispatch(deleteProductThunk(productId)).then(closeModal())
-        navigate('/products/manage')
     }
 
     return (

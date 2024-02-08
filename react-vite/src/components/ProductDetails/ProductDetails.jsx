@@ -37,24 +37,26 @@ function ProductDetails() {
             <img className='product-detail-image' src={product?.image} alt='product-image'/>
             <div className='product-info'>
                 <p className='detail-seller-name'>{`${user[product?.seller_id]?.first_name} ${user[product?.seller_id]?.last_name}`}</p>
-                <h1 className='detail-product-name'>{product.name}</h1>
-                <div className='detail-review'>
-                    <p>{averageRating(product?.reviews).toFixed(1)}</p>
-                    <p>{(() => {
-                        const stars = [];
-                        for (let i = 0; i < 5; i++) {
-                            if (i < Math.floor(averageRating(product?.reviews))) {
-                                stars.push(<i style={{cursor: 'default'}} key={i} className="fas fa-star"></i>)
-                            } else if (i === Math.floor(averageRating(product?.reviews)) && averageRating(product?.reviews) % 1 !== 0) {
-                                stars.push(<i style={{cursor: 'default'}} key={i} className="fas fa-star-half-alt"></i>)
-                            } else {
-                                stars.push(<i style={{cursor: 'default'}} key={i} className="far fa-star"></i>)
+                <h1 className='detail-product-name'>{product?.name}</h1>
+                {!product?.reviews?.length ? null :
+                    <div className='detail-review'>
+                        <p>{averageRating(product?.reviews).toFixed(1)}</p>
+                        <p>{(() => {
+                            const stars = [];
+                            for (let i = 0; i < 5; i++) {
+                                if (i < Math.floor(averageRating(product?.reviews))) {
+                                    stars.push(<i style={{cursor: 'default'}} key={i} className="fas fa-star"></i>)
+                                } else if (i === Math.floor(averageRating(product?.reviews)) && averageRating(product?.reviews) % 1 !== 0) {
+                                    stars.push(<i style={{cursor: 'default'}} key={i} className="fas fa-star-half-alt"></i>)
+                                } else {
+                                    stars.push(<i style={{cursor: 'default'}} key={i} className="far fa-star"></i>)
+                                }
                             }
-                        }
-                        return stars
-                    })()}</p>
-                    <p>{product?.reviews?.length <= 1 ? `${product?.reviews?.length} Review` : `${product?.reviews?.length} Reviews`}</p>
-                </div>
+                            return stars
+                        })()}</p>
+                        <p>{product?.reviews?.length <= 1 ? `${product?.reviews?.length} Review` : `${product?.reviews?.length} Reviews`}</p>
+                    </div>
+                }
                 <h2 className='detail-price'>{`$${product?.price}`}</h2>
                 <div className='detail-buttons'>
                     <button className='add-to-bag' onClick={comingSoon}>ADD TO BAG</button>

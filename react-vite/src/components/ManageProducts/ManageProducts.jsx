@@ -41,21 +41,23 @@ function ManageProducts() {
                                 <div style={{height: 450}} className='product-tile' onClick={() => navigate(`/products/${product?.id}`)}>
                                     <img className='product-image' src={product?.image} alt='product-image' />
                                     <h4 style={{paddingTop: 10}} className='product-name'>{product?.name}</h4>
-                                    <div className='review-average'>
-                                        {(() => {
-                                            const stars = [];
-                                            for (let i = 0; i < 5; i++) {
-                                                if (i < Math.floor(averageRating(product?.reviews))) {
-                                                    stars.push(<i key={i} className="fas fa-star"></i>)
-                                                } else if (i === Math.floor(averageRating(product?.reviews)) && averageRating(product?.reviews) % 1 !== 0) {
-                                                    stars.push(<i key={i} className="fas fa-star-half-alt"></i>)
-                                                } else {
-                                                    stars.push(<i key={i} className="far fa-star"></i>)
+                                    {!product?.reviews?.length ? null :
+                                        <div className='review-average'>
+                                            {(() => {
+                                                const stars = [];
+                                                for (let i = 0; i < 5; i++) {
+                                                    if (i < Math.floor(averageRating(product?.reviews))) {
+                                                        stars.push(<i key={i} className="fas fa-star"></i>)
+                                                    } else if (i === Math.floor(averageRating(product?.reviews)) && averageRating(product?.reviews) % 1 !== 0) {
+                                                        stars.push(<i key={i} className="fas fa-star-half-alt"></i>)
+                                                    } else {
+                                                        stars.push(<i key={i} className="far fa-star"></i>)
+                                                    }
                                                 }
-                                            }
-                                            return stars
-                                        })()} {`(${product?.reviews?.length})`}
-                                    </div>
+                                                return stars
+                                            })()} {`(${product?.reviews?.length})`}
+                                        </div>
+                                    }
                                     <span className='product-price'>{`$${Number(product?.price).toFixed(2)}`}</span>
                                 </div>
                                 <div className="manage-buttons">

@@ -45,13 +45,14 @@
 
 .manage-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 20px;
     padding-bottom: 10px;
 }
 
 .update-product-button, .modal-button {
     min-height: 45px;
-    min-width: 150px;
+    min-width: 130px;
     font-weight: 600;
     font-size: medium;
     cursor: pointer;

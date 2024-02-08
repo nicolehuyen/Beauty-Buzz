@@ -81,7 +81,7 @@ function SignupFormModal() {
             type="text"
             value={first_name}
             onChange={(e) => setFirstName(e.target.value)}
-            required
+            // required
           />
         </label>
         <div style={{minHeight: 30}}>{errors.first_name ? <span className="error">{errors.first_name}</span> : ' '}</div>
@@ -92,7 +92,7 @@ function SignupFormModal() {
             type="text"
             value={last_name}
             onChange={(e) => setLastName(e.target.value)}
-            required
+            // required
           />
         </label>
         <div style={{minHeight: 30}}>{errors.last_name ? <span className="error">{errors.last_name}</span> : ' '}</div>
@@ -103,7 +103,7 @@ function SignupFormModal() {
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
+            // required
           />
         </label>
         <div style={{minHeight: 30}}>{errors.email ? <span className="error">{errors.email}</span> : ' '}</div>
@@ -114,7 +114,7 @@ function SignupFormModal() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+            // required
           />
         </label>
         <div style={{minHeight: 30}}>{errors.password ? <span className="error">{errors.password}</span> : ' '}</div>
@@ -125,7 +125,7 @@ function SignupFormModal() {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+            // required
           />
         </label>
         <div style={{minHeight: 30}}>{errors.confirmPassword ? <span className="error">{errors.confirmPassword}</span> : ' '}</div>

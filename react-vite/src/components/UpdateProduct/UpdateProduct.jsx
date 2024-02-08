@@ -24,7 +24,7 @@ function UpdateProduct() {
 
         if(!name) newErrors.name = 'Product name is required.'
         if(String(name).length > 140) newErrors.name = 'Product name cannot exceed 140 characters.'
-        // if(!category) newErrors.category = 'Category is required.'
+        if(!category) newErrors.category = 'Category is required.'
         if(!Number(price)) newErrors.price = 'Price is required.'
         if(Number(price) > 999) newErrors.price = 'Price cannot exceed $999.'
         if(!description) newErrors.description = 'Description is required.'
@@ -32,7 +32,7 @@ function UpdateProduct() {
         if(!image || !image?.name?.endsWith('.png') && !image?.name?.endsWith('.jpg') && !image?.name?.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format.'
 
         setErrors(newErrors)
-    }, [sessionUser, navigate, name, price, description, image])
+    }, [sessionUser, navigate, name, category, price, description, image])
 
     useEffect(() => {
         dispatch(loadOneProductThunk(productId))
@@ -94,6 +94,7 @@ function UpdateProduct() {
                                     // defaultValue={category}
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
+                                    <option value='' disabled>Select a category</option>
                                     <option value={"face"}>Face</option>
                                     <option value={"eyes"}>Eyes</option>
                                     <option value={"lips"}>Lips</option>
