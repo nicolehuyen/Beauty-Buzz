@@ -34,7 +34,7 @@ function CreateReview({productId}) {
                 stars
             }
 
-            await dispatch(createReviewThunk(newReview, productId)).then(closeModal)
+            await dispatch(createReviewThunk(newReview, productId)).then(closeModal())
         }
     }
 
@@ -43,38 +43,44 @@ function CreateReview({productId}) {
     }
 
     return (
-        <form className="review-form" onSubmit={handleSubmit}>
+        <div className="create-review-form">
             <h2 className="review-h2">What do you think of this product?</h2>
-            <textarea
-                className="review-text-box"
-                type='text'
-                value={review}
-                placeholder='Leave your review here...'
-                onChange={(e) => setReview(e.target.value)}
-                minLength={10}
-            />
-            <div className="star-rating-div">
-                {[...Array(5)].map((star, index) => {
-                    const rating = index + 1
-                    const starClass = rating <= (hover || stars) ? 'fa-solid' : 'fa-regular'
-                    return (
-                        <label key={rating}>
-                            <input
-                                type='radio'
-                                value={rating}
-                                onClick={() => handleStarClick(rating)}
-                            />
-                            <i
-                                className={`fa ${starClass} fa-star`}
-                                onMouseEnter={() => setHover(rating)}
-                                onMouseLeave={() => setHover(0)}
-                            ></i>
-                        </label>
-                    )
-                })} Stars
-            </div>
-            <button className="create-review-button" type="submit" disabled={Object.values(errors).length}>Submit Your Review</button>
-        </form>
+            <form className="review-form" onSubmit={handleSubmit}>
+                <textarea
+                    className="review-text-box"
+                    type='text'
+                    value={review}
+                    placeholder='Leave your review here...'
+                    onChange={(e) => setReview(e.target.value)}
+                    minLength={10}
+                />
+                <div style={{minHeight: 25}}>{errors.review ? <span className="error">{errors.review}</span> : ' '}</div>
+                <div className="star-rating-div">
+                    {[...Array(5)].map((star, index) => {
+                        const rating = index + 1
+                        const starClass = rating <= (hover || stars) ? 'fa-solid' : 'fa-regular'
+                        return (
+                            <label key={rating}>
+                                <input
+                                    type='radio'
+                                    value={rating}
+                                    onClick={() => handleStarClick(rating)}
+                                />
+                                <i
+                                    className={`fa ${starClass} fa-star`}
+                                    onMouseEnter={() => setHover(rating)}
+                                    onMouseLeave={() => setHover(0)}
+                                ></i>
+                            </label>
+                        )
+                    })} Stars
+                </div>
+                <div style={{minHeight: 25}}>{errors.stars ? <span className="error">{errors.stars}</span> : ' '}</div>
+                <div className="submit-review-form">
+                    <button className="create-review-button" type="submit">Submit Your Review</button>
+                </div>
+            </form>
+        </div>
     )
 }
 

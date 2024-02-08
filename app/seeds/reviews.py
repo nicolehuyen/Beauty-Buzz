@@ -28,13 +28,13 @@ def seed_reviews():
     )
     review5 = Review(
         product_id=5,
-        creator_id=2,
+        creator_id=3,
         review='I\'ve tried this mascara multiple times and it was great but this time it came really dry. I can barley get any product.',
         stars=3
     )
     review6 = Review(
         product_id=6,
-        creator_id=3,
+        creator_id=2,
         review='This product really fills in my brows well. It stays on all day and doesn\'t smudge. I will definitely keep this on my list of faves!',
         stars=5
     )

@@ -40,6 +40,5 @@ class User(db.Model, UserMixin):
             'email': self.email
         }
 
-
 # username = db.Column(db.String(40), nullable=False, unique=True)
 # 'username': self.username,

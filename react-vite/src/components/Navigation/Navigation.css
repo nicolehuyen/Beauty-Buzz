@@ -1,3 +1,102 @@
+* {
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 30px;
+  border-bottom: 1px solid rgb(224, 224, 224);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+.logo-title {
+  height: 60px;
+  cursor: pointer;
+}
+
+.categories {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  margin: 0px 35px;
+}
+
+.cate-title {
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.cate-title:hover {
+  padding-bottom: 27px;
+  border-bottom: 3px solid black;
+  transition: all ease 0.3s;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+
+.fa-user-circle, .fa-bag-shopping {
+  padding-top: 28px;
+  padding-bottom: 28px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.fa-user-circle:hover, .fa-bag-shopping:hover {
+  padding-bottom: 25px;
+  border-bottom: 3px solid black;
+  transition: all ease 0.3s;
+}
+
 .profile-dropdown {
   position: absolute;
+  top: 60px;
+  right: 30px;
+  background-color: #f1d5db;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border-radius: 4px;
+  border: .5px solid grey;
+}
+
+.profile-user {
+  font-size: 15px;
+  padding: 10px 50px 10px 20px;
+  cursor: default;
+}
+
+.profile-user:hover {
+  background-color: #f3dbe0;
+}
+
+.profile-user-info {
+  font-size: 15px;
+  padding: 10px 50px 10px 20px;
+  cursor: pointer;
+  border-top: .5px solid black;
+}
+
+.profile-user-info:hover {
+  background-color: #f3dbe0;
+}
+
+.profile-icon {
+  padding-right: 10px;
 }

@@ -1,13 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './Layout';
-import LoginFormPage from '../components/LoginFormPage';
-import SignupFormPage from '../components/SignupFormPage';
 import AllProducts from '../components/AllProducts/AllProducts';
 import ProductDetails from '../components/ProductDetails/ProductDetails';
 import ProductCategory from '../components/ProductCategory/ProductCategory';
 import CreateProduct from '../components/CreateProduct/CreateProduct';
 import UpdateProduct from '../components/UpdateProduct/UpdateProduct';
 import ManageProducts from '../components/ManageProducts/ManageProducts';
+import LandingPage from '../components/LandingPage/LandingPage';
 
 export const router = createBrowserRouter([
   {
@@ -15,15 +14,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Welcome!</h1>,
-      },
-      {
-        path: "login",
-        element: <LoginFormPage />,
-      },
-      {
-        path: "signup",
-        element: <SignupFormPage />,
+        element: <LandingPage />,
       },
       {
         path: "products",

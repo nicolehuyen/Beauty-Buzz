@@ -91,7 +91,6 @@ export const loadCategoryProductsThunk = (category) => async(dispatch) => {
 
     if (res.ok) {
         const data = await res.json()
-        console.log(data)
         dispatch(loadCategoryProducts(data.product_categories, category))
         return data
     }
@@ -159,7 +158,7 @@ const productReducer = (state = {}, action) => {
         case LOAD_PRODUCTS: {
             // we use the spread operator to keep copying over the old state
             // this makes sure that all of our info stays consistent across pages and can help speed up navigation when revisiting pages we have already been to
-            const newState = {...state}
+            const newState = {}
             action.products.products.forEach(product => {
                 newState[product.id] = product
             })
@@ -186,7 +185,7 @@ const productReducer = (state = {}, action) => {
         //     return newState
         // }
         case MANAGE_PRODUCTS: {
-            const newState = {...state}
+            const newState = {}
             action.products.user_products.forEach(product => {
                 newState[product.id] = product
             })

@@ -1,0 +1,81 @@
+.create-product-section {
+    margin: 100px 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.create-prod-box {
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 30px 30px 20px;
+    width: 450px;
+}
+
+.product-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.entry-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.input-title {
+    padding-bottom: 5px;
+}
+
+.cate-price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cate-field {
+    width: 260px;
+}
+
+.cate-input {
+    height: 42px;
+    cursor: pointer;
+}
+
+.text-box {
+    height: 200px;
+    padding-top: 5px;
+}
+
+input::file-selector-button {
+    padding: 12px 120px;
+    cursor: pointer;
+}
+
+.create-button-div {
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.create-prod-button {
+    min-height: 50px;
+    min-width: 270px;
+    font-weight: 600;
+    font-size: large;
+    cursor: pointer;
+    border-radius: 25px;
+    border: none;
+    background-color: #f1d5db;
+}
+
+.create-prod-button:hover {
+    background-color: #f3dbe0;
+    transform: scale(1.04);
+}
+
+.loading-text {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}

@@ -30,6 +30,7 @@ class Product(db.Model):
             'description': self.description,
             'category': self.category,
             'image': self.image,
+            'reviews': [review.stars for review in self.review],
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }

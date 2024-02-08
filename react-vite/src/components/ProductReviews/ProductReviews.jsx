@@ -1,16 +1,16 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { loadProductReviewsThunk } from "../../redux/review"
-import { useParams } from "react-router-dom"
 import { loadUsersThunk } from "../../redux/user"
 import OpenModalButton from "../OpenModalButton/OpenModalButton"
+import ReviewModalButton from "./ReviewModalButton"
 import CreateReview from "../CreateReview/CreateReview"
 import UpdateReview from "../UpdateReview/UpdateReview"
 import DeleteReview from "../DeleteReview/DeleteReview"
+import './ProductReviews.css'
 
-function ProductReviews() {
+function ProductReviews({productId, product}) {
     const dispatch = useDispatch()
-    const { productId } = useParams()
     const reviewsObj = useSelector(state => state.review)
     const reviews = Object.values(reviewsObj)
     const user = useSelector(state => state.user)
@@ -42,30 +42,65 @@ function ProductReviews() {
         return year
     }
 
+    function averageRating() {
+        if(!reviews) return 0
+        const totalStars = reviews.reduce((acc, review) => acc + review.stars, 0)
+        const averageRating = totalStars / reviews.length
+        return averageRating
+    }
+
     return (
         <section className="product-reviews">
-            <OpenModalButton buttonText={"Add a review"} modalComponent={<CreateReview productId={productId}/>}/>
-            {reviews.reverse().map(review => (
-                <div key={review.id}>
-                    {(() => {
-                        const stars = [];
-                        for (let i = 0; i < 5; i++) {
-                            const starClass = i < review.stars ? "fa-solid" : "fa-regular";
-                            stars.push(<i key={i} className={`fa ${starClass} fa-star`}></i>);
+            <div className="review-title">
+                <h2>Reviews</h2>
+                {sessionUser && sessionUser?.id !== product?.seller_id && (<ReviewModalButton buttonText={"WRITE A REVIEW"} modalComponent={<CreateReview productId={productId}/>}/>)}
+            </div>
+            <div className="average-rating">
+                {!reviews?.length ? <p style={{fontSize: 18}}>Write the first review!</p> :
+                <>
+                <h2>{(() => {
+                    const stars = [];
+                    for (let i = 0; i < 5; i++) {
+                        if (i < Math.floor(averageRating())) {
+                            stars.push(<i key={i} className="fas fa-star"></i>)
+                        } else if (i === Math.floor(averageRating()) && averageRating() % 1 !== 0) {
+                            stars.push(<i key={i} className="fas fa-star-half-alt"></i>)
+                        } else {
+                            stars.push(<i key={i} className="far fa-star"></i>)
                         }
-                        return stars
-                    })()}
-                    <p className="review-text">{review?.review}</p>
-                    <div className="name-date">
-                        <p className="reviewer-name">{user[review?.creator_id]?.first_name}</p>
-                        <p className="review-date">{month(review?.created_at)} {day(review?.created_at)}, {year(review?.created_at)}</p>
+                    }
+                    return stars
+                })()}</h2>
+                <h1 className="avg-rate">{averageRating().toFixed(1)}</h1>
+                <p>{reviews?.length <= 1 ? `${reviews?.length} Review` : `${reviews?.length} Reviews`}</p>
+                </>
+                }
+            </div>
+            {reviews.reverse().map(review => (
+                <div className='review-container' key={review.id}>
+                    <div className="reviewers-review">
+                        <p>{(() => {
+                            const stars = [];
+                            for (let i = 0; i < 5; i++) {
+                                const starClass = i < review?.stars ? "fa-solid" : "fa-regular";
+                                stars.push(<i key={i} className={`fa ${starClass} fa-star`}></i>);
+                            }
+                            return stars
+                        })()}</p>
+                        <p className="review-text">{review?.review}</p>
+                        <div className="name-date">
+                            <p className="reviewer-name">{user[review?.creator_id]?.first_name}</p>
+                            <p className="review-date">{month(review?.created_at)} {day(review?.created_at)}, {year(review?.created_at)}</p>
+                        </div>
                     </div>
-                    {sessionUser?.id === review?.creator_id && (
-                        <>
-                        <OpenModalButton buttonText={"Edit"} modalComponent={<UpdateReview productId={productId} reviewId={review.id}/>}/>
-                        <OpenModalButton buttonText={"Delete"} modalComponent={<DeleteReview productId={productId} reviewId={review.id}/>}/>
-                        </>
-                    )}
+                    <div className="review-buttons">
+                        {sessionUser?.id === review?.creator_id && (
+                            <>
+                            <OpenModalButton buttonText={"Edit"} modalComponent={<UpdateReview productId={productId} reviewId={review.id}/>}/>
+                            <OpenModalButton buttonText={"Delete"} modalComponent={<DeleteReview productId={productId} reviewId={review.id}/>}/>
+                            </>
+                        )}
+                    </div>
                 </div>
             ))}
         </section>
