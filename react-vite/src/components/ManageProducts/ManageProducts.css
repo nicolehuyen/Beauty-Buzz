@@ -1,0 +1,67 @@
+.manage-products-section {
+    margin: 110px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.manage-products-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 750px;
+    padding-bottom: 20px;
+    white-space: nowrap;
+}
+
+/* .manage-title {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.create-button {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+} */
+
+.create-new-product-button {
+    min-height: 50px;
+    min-width: 210px;
+    font-weight: 600;
+    font-size: large;
+    cursor: pointer;
+    border-radius: 25px;
+    border: black 2px solid;
+    background-color: white;
+}
+
+.create-new-product-button:hover {
+    background-color: #f3dbe0;
+    transform: scale(1.04);
+}
+
+.manage-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 10px;
+}
+
+.update-product-button, .modal-button {
+    min-height: 45px;
+    min-width: 130px;
+    font-weight: 600;
+    font-size: medium;
+    cursor: pointer;
+    border-radius: 25px;
+    border: black 1px solid;
+    background-color: white;
+}
+
+.update-product-button:hover, .modal-button:hover {
+    background-color: #f3dbe0;
+    transform: scale(1.04);
+}

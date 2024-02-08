@@ -7,11 +7,13 @@ function SignupFormPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sessionUser = useSelector((state) => state.session.user);
+  const [first_name, setFirstName] = useState("")
+  const [last_name, setLastName] = useState("")
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  // const [username, setUsername] = useState("");
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
@@ -21,15 +23,16 @@ function SignupFormPage() {
     if (password !== confirmPassword) {
       return setErrors({
         confirmPassword:
-          "Confirm Password field must be the same as the Password field",
+          "Confirm Password field must be the same as the Password field.",
       });
     }
 
     const serverResponse = await dispatch(
       thunkSignup({
+        first_name,
+        last_name,
         email,
-        username,
-        password,
+        password
       })
     );
 
@@ -46,6 +49,26 @@ function SignupFormPage() {
       {errors.server && <p>{errors.server}</p>}
       <form onSubmit={handleSubmit}>
         <label>
+          First Name
+          <input
+            type="text"
+            value={first_name}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </label>
+        {errors.first_name && <p>{errors.first_name}</p>}
+        <label>
+          Last Name
+          <input
+            type="text"
+            value={last_name}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </label>
+        {errors.last_name && <p>{errors.last_name}</p>}
+        <label>
           Email
           <input
             type="text"
@@ -55,16 +78,6 @@ function SignupFormPage() {
           />
         </label>
         {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
         <label>
           Password
           <input
@@ -92,3 +105,14 @@ function SignupFormPage() {
 }
 
 export default SignupFormPage;
+
+{/* <label>
+Username
+<input
+  type="text"
+  value={username}
+  onChange={(e) => setUsername(e.target.value)}
+  required
+/>
+</label>
+{errors.username && <p>{errors.username}</p>} */}
