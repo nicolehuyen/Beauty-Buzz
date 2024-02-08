@@ -14,12 +14,14 @@ function CreateReview({productId}) {
     const [hover, setHover] = useState(0)
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal()
+    const [submitted, setSubmitted] = useState(false)
 
     useEffect(() => {
         if(!sessionUser) navigate('/')
         const newErrors = {}
 
-        if(String(review).length < 10) newErrors.review = 'Review needs a minimum of 10 characters.'
+        if(String(review).length < 10) newErrors.review = 'Review must be at least 10 characters.'
+        if(String(review).length > 340) newErrors.review = 'Review cannot exceed 340 characters.'
         if(!stars) newErrors.stars = 'Star rating is required.'
 
         setErrors(newErrors)
@@ -27,6 +29,8 @@ function CreateReview({productId}) {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
+
+        setSubmitted(true)
 
         if(!Object.values(errors).length) {
             const newReview = {
@@ -54,7 +58,7 @@ function CreateReview({productId}) {
                     onChange={(e) => setReview(e.target.value)}
                     minLength={10}
                 />
-                <div style={{minHeight: 25}}>{errors.review ? <span className="error">{errors.review}</span> : ' '}</div>
+                <div style={{minHeight: 25}}>{submitted && errors.review ? <span className="error">{errors.review}</span> : ' '}</div>
                 <div className="star-rating-div">
                     {[...Array(5)].map((star, index) => {
                         const rating = index + 1
@@ -75,7 +79,7 @@ function CreateReview({productId}) {
                         )
                     })} Stars
                 </div>
-                <div style={{minHeight: 25}}>{errors.stars ? <span className="error">{errors.stars}</span> : ' '}</div>
+                <div style={{minHeight: 25}}>{submitted && errors.stars ? <span className="error">{errors.stars}</span> : ' '}</div>
                 <div className="submit-review-form">
                     <button className="create-review-button" type="submit">Submit Your Review</button>
                 </div>

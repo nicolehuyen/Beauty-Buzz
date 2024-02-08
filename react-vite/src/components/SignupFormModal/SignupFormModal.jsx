@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
@@ -16,34 +16,27 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const [submitted, setSubmitted] = useState(false)
   // const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const newErrors = {}
+
+    // if(!first_name) newErrors.first_name = 'First name is required.'
+    if(String(first_name).length > 40) newErrors.first_name = 'First name cannot exceed 40 characters.'
+    // if(!last_name) newErrors.last_name = 'Last name is required.'
+    if(String(last_name).length > 40) newErrors.last_name = 'Last name cannot exceed 40 characters.'
+    // if(!email) newErrors.email = 'Email is required.'
+    if(String(password).length < 8) newErrors.password = 'Password must be 8 characters or more.'
+    if(password !== confirmPassword) newErrors.confirmPassword = "Confirm Password field must be the same as the Password field."
+
+    setErrors(newErrors)
+  }, [first_name, last_name, email, password, confirmPassword])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (String(first_name).length > 40) {
-      return setErrors({
-        first_name: 'First name cannot exceed 40 characters.'
-      })
-    }
-
-    if (String(last_name).length > 40) {
-      return setErrors({
-        last_name: 'Last name cannot exceed 40 characters.'
-      })
-    }
-
-    if (String(password).length < 8) {
-      return setErrors({
-        password: 'Password must be 8 characters or more.'
-      })
-    }
-
-    if (password !== confirmPassword) {
-      return setErrors({
-        confirmPassword: "Confirm Password field must be the same as the Password field."
-      });
-    }
+    setSubmitted(true)
 
     const serverResponse = await dispatch(
       thunkSignup({
@@ -72,7 +65,7 @@ function SignupFormModal() {
     <div className="login-modal">
       <h2>Create Your Account</h2>
       <p style={{paddingTop: 3}}>Registration is easy.</p>
-      <div style={{minHeight: 30}}>{errors.server ? <span className="error">{errors.server}</span> : ' '}</div>
+      <div style={{minHeight: 30}}>{submitted && errors.server ? <span className="error">{errors.server}</span> : ' '}</div>
       <form onSubmit={handleSubmit} className="sign-in-form">
         <label className="form-label">
           First Name
@@ -84,7 +77,7 @@ function SignupFormModal() {
             // required
           />
         </label>
-        <div style={{minHeight: 30}}>{errors.first_name ? <span className="error">{errors.first_name}</span> : ' '}</div>
+        <div style={{minHeight: 30}}>{submitted && errors.first_name ? <span className="error">{errors.first_name}</span> : ' '}</div>
         <label className="form-label">
           Last Name
           <input
@@ -95,7 +88,7 @@ function SignupFormModal() {
             // required
           />
         </label>
-        <div style={{minHeight: 30}}>{errors.last_name ? <span className="error">{errors.last_name}</span> : ' '}</div>
+        <div style={{minHeight: 30}}>{submitted && errors.last_name ? <span className="error">{errors.last_name}</span> : ' '}</div>
         <label className="form-label">
           Email Address
           <input
@@ -106,7 +99,7 @@ function SignupFormModal() {
             // required
           />
         </label>
-        <div style={{minHeight: 30}}>{errors.email ? <span className="error">{errors.email}</span> : ' '}</div>
+        <div style={{minHeight: 30}}>{submitted && errors.email ? <span className="error">{errors.email}</span> : ' '}</div>
         <label className="form-label">
           Password
           <input
@@ -117,7 +110,7 @@ function SignupFormModal() {
             // required
           />
         </label>
-        <div style={{minHeight: 30}}>{errors.password ? <span className="error">{errors.password}</span> : ' '}</div>
+        <div style={{minHeight: 30}}>{submitted && errors.password ? <span className="error">{errors.password}</span> : ' '}</div>
         <label className="form-label">
           Confirm Password
           <input
@@ -128,7 +121,7 @@ function SignupFormModal() {
             // required
           />
         </label>
-        <div style={{minHeight: 30}}>{errors.confirmPassword ? <span className="error">{errors.confirmPassword}</span> : ' '}</div>
+        <div style={{minHeight: 30}}>{submitted && errors.confirmPassword ? <span className="error">{errors.confirmPassword}</span> : ' '}</div>
         <div className="login-div">
           <button className="login-button" type="submit">Register</button>
           <button className='demo-user-login' onClick={demoUserLogin}>Demo User</button>
