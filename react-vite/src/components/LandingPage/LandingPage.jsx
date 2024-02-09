@@ -6,8 +6,8 @@ import { useEffect } from 'react'
 import ProductTile from '../AllProducts/ProductTile'
 import { loadProductsThunk } from '../../redux/product'
 import { loadUsersThunk } from '../../redux/user'
-import github from './github.png'
-import linkedin from './linkedin2.png'
+import github from './GitHub.png'
+import linkedin from './LinkedIn.png'
 import { Link } from 'react-router-dom'
 
 function LandingPage() {
