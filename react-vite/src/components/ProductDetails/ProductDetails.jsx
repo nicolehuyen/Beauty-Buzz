@@ -41,7 +41,7 @@ function ProductDetails() {
             <div className='product-info'>
                 <p className='detail-seller-name'>{`${user[product?.seller_id]?.first_name} ${user[product?.seller_id]?.last_name}`}</p>
                 <h1 className='detail-product-name'>{product?.name}</h1>
-                {!product?.reviews?.length ? null :
+                {!reviewStars?.length ? null :
                     <div className='detail-review'>
                         <p>{averageRating(reviewStars).toFixed(1)}</p>
                         <p>{(() => {
