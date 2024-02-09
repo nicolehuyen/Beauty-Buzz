@@ -21,7 +21,7 @@
 }
 
 .product-tile {
-    height: 490px;
+    height: 480px;
     width: 320px;
     display: flex;
     flex-direction: column;
