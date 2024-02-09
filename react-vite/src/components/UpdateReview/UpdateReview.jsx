@@ -19,7 +19,8 @@ function UpdateReview({productId, reviewId}) {
         if(!sessionUser) navigate('/')
         const newErrors = {}
 
-        if(String(review).length < 10) newErrors.review = 'Review needs a minimum of 10 characters.'
+        if(String(review).length < 10) newErrors.review = 'Review must be at least 10 characters.'
+        if(String(review).length > 340) newErrors.review = 'Review cannot exceed 340 characters.'
         if(!stars) newErrors.stars = 'Star rating is required.'
 
         setErrors(newErrors)

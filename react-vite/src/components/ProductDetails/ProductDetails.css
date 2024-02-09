@@ -70,3 +70,7 @@
     border: none;
     background-color: #f1d5db;
 }
+
+.product-description {
+    white-space: pre-wrap;
+}
