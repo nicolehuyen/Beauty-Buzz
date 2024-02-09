@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
@@ -19,24 +19,15 @@ function SignupFormModal() {
   const [submitted, setSubmitted] = useState(false)
   // const [username, setUsername] = useState("");
 
-  useEffect(() => {
-    const newErrors = {}
-
-    // if(!first_name) newErrors.first_name = 'First name is required.'
-    if(String(first_name).length > 40) newErrors.first_name = 'First name cannot exceed 40 characters.'
-    // if(!last_name) newErrors.last_name = 'Last name is required.'
-    if(String(last_name).length > 40) newErrors.last_name = 'Last name cannot exceed 40 characters.'
-    // if(!email) newErrors.email = 'Email is required.'
-    if(String(password).length < 8) newErrors.password = 'Password must be 8 characters or more.'
-    if(password !== confirmPassword) newErrors.confirmPassword = "Confirm Password field must be the same as the Password field."
-
-    setErrors(newErrors)
-  }, [first_name, last_name, email, password, confirmPassword])
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setSubmitted(true)
+
+    if(String(first_name).length > 40) return setErrors({first_name: 'First name cannot exceed 40 characters.'})
+    if(String(last_name).length > 40) return setErrors({last_name: 'Last name cannot exceed 40 characters.'})
+    if(String(password).length < 8) return setErrors({password: 'Password must be 8 characters or more.'})
+    if(password !== confirmPassword) return setErrors({confirmPassword: "Confirm Password field must be the same as the Password field."})
 
     const serverResponse = await dispatch(
       thunkSignup({

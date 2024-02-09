@@ -40,7 +40,7 @@
 .whats-new {
     display: flex;
     flex-direction: column;
-    padding: 0px 55px;
+    padding: 0px 55px 30px;
 }
 
 .whats-new-title {
@@ -66,4 +66,19 @@
     display: flex;
     overflow: hidden;
     gap: 26px;
+}
+
+.footer {
+    border-top: 1px solid rgb(224, 224, 224);
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.social-media {
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    text-decoration: none;
 }

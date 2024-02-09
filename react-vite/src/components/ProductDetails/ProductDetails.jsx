@@ -11,13 +11,16 @@ function ProductDetails() {
     const { productId } = useParams()
     const product = useSelector(state => state.product[productId])
     const user = useSelector(state => state.user)
+    const review = useSelector(state => state.review)
+    const reviews = Object.values(review)
+    const reviewStars = reviews.map(item => item.stars)
 
     useEffect(() => {
         dispatch(loadOneProductThunk(productId))
         dispatch(loadUsersThunk())
     }, [dispatch, productId])
 
-    if(!product || !user) return null
+    if(!product || !user || !review) return null
 
     function averageRating(stars) {
         if(!stars) return 0
@@ -40,13 +43,13 @@ function ProductDetails() {
                 <h1 className='detail-product-name'>{product?.name}</h1>
                 {!product?.reviews?.length ? null :
                     <div className='detail-review'>
-                        <p>{averageRating(product?.reviews).toFixed(1)}</p>
+                        <p>{averageRating(reviewStars).toFixed(1)}</p>
                         <p>{(() => {
                             const stars = [];
                             for (let i = 0; i < 5; i++) {
-                                if (i < Math.floor(averageRating(product?.reviews))) {
+                                if (i < Math.floor(averageRating(reviewStars))) {
                                     stars.push(<i style={{cursor: 'default'}} key={i} className="fas fa-star"></i>)
-                                } else if (i === Math.floor(averageRating(product?.reviews)) && averageRating(product?.reviews) % 1 !== 0) {
+                                } else if (i === Math.floor(averageRating(reviewStars)) && averageRating(reviewStars) % 1 !== 0) {
                                     stars.push(<i style={{cursor: 'default'}} key={i} className="fas fa-star-half-alt"></i>)
                                 } else {
                                     stars.push(<i style={{cursor: 'default'}} key={i} className="far fa-star"></i>)
@@ -54,7 +57,7 @@ function ProductDetails() {
                             }
                             return stars
                         })()}</p>
-                        <p>{product?.reviews?.length <= 1 ? `${product?.reviews?.length} Review` : `${product?.reviews?.length} Reviews`}</p>
+                        <p>{reviewStars?.length <= 1 ? `${reviewStars?.length} Review` : `${reviewStars?.length} Reviews`}</p>
                     </div>
                 }
                 <h2 className='detail-price'>{`$${product?.price}`}</h2>

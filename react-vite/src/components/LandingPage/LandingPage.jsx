@@ -6,6 +6,9 @@ import { useEffect } from 'react'
 import ProductTile from '../AllProducts/ProductTile'
 import { loadProductsThunk } from '../../redux/product'
 import { loadUsersThunk } from '../../redux/user'
+import github from './github.png'
+import linkedin from './linkedin2.png'
+import { Link } from 'react-router-dom'
 
 function LandingPage() {
     const navigate = useNavigate()
@@ -38,6 +41,14 @@ function LandingPage() {
                 ))}
                 </div>
             </div>
+            <footer className='footer'>
+                <Link to={"https://github.com/nicolehuyen/Beauty-Buzz.git"}>
+                    <img className='social-media' src={github} alt='github' />
+                </Link>
+                <Link to={"https://www.linkedin.com/in/nicolehuyenle/"}>
+                    <img className='social-media' src={linkedin} alt='linkedin' />
+                </Link>
+            </footer>
         </section>
     )
 }
