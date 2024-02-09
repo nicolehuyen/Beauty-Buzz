@@ -36,9 +36,9 @@ def seed_products():
     )
     eyes1 = Product(
         seller_id=2,
-        name='Better Than Sex Volumizing & Lengthening Mascara',
+        name='Volumizing & Lengthening Mascara',
         price=29.00,
-        description='Too Faced Better Than Sex Volumizing Mascara is an intensely black volumizing and lengthening mascara for the sexiest, most defined lashes possible.',
+        description='Too Faced Volumizing Mascara is an intensely black volumizing and lengthening mascara for the sexiest, most defined lashes possible.',
         category='eyes',
         image='https://beauty-buzz-images.s3.us-east-2.amazonaws.com/mascara.png'
     )
