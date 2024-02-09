@@ -49,11 +49,13 @@ function ProductReviews({productId, product}) {
         return averageRating
     }
 
+    const reviewers = reviews.map(review => review.creator_id)
+
     return (
         <section className="product-reviews">
             <div className="review-title">
                 <h2>Reviews</h2>
-                {sessionUser && sessionUser?.id !== product?.seller_id && (<ReviewModalButton buttonText={"WRITE A REVIEW"} modalComponent={<CreateReview productId={productId}/>}/>)}
+                {sessionUser && sessionUser?.id !== product?.seller_id && !reviewers.includes(sessionUser?.id) && (<ReviewModalButton buttonText={"WRITE A REVIEW"} modalComponent={<CreateReview productId={productId}/>}/>)}
             </div>
             <div className="average-rating">
                 {!reviews?.length ? <p style={{fontSize: 18}}>Write the first review!</p> :

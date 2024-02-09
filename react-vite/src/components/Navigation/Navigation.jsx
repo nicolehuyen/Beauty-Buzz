@@ -16,10 +16,8 @@ function Navigation() {
   }
 
   const login = (e) => {
-    if(!sessionUser) {
-      e.preventDefault()
-      openModal()
-    }
+    e.preventDefault()
+    openModal()
   }
 
   return (
@@ -34,7 +32,7 @@ function Navigation() {
       </div>
       <div className="nav-right">
         {!sessionUser ? (
-          <i className="fas fa-user-circle" onClick={(e) => login(e)}/>
+          <i className="fas fa-user-circle" onClick={login}/>
         ) : (
           <ProfileButton />
         )}
