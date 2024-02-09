@@ -38,7 +38,7 @@ function ManageProducts() {
                     <div className="products-container">
                         {products.map((product) => (
                             <div key={product.id}>
-                                <div style={{height: 450}} className='product-tile' onClick={() => navigate(`/products/${product?.id}`)}>
+                                <div style={{height: 460}} className='product-tile' onClick={() => navigate(`/products/${product?.id}`)}>
                                     <img className='product-image' src={product?.image} alt='product-image' />
                                     <h4 style={{paddingTop: 10}} className='product-name'>{product?.name}</h4>
                                     {!product?.reviews?.length ? null :
