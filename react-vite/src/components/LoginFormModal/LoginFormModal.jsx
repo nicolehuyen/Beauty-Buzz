@@ -15,6 +15,13 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal, setModalContent } = useModal();
 
+  const demoUserLogin = async(e) => {
+    e.preventDefault()
+
+    return await dispatch(sessionActions.thunkLogin({email: 'demo@aa.io', password: 'password'}))
+    .then(navigate('/')).then(closeModal())
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -28,16 +35,12 @@ function LoginFormModal() {
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
-      closeModal();
+      navigate('/')
+      closeModal()
     }
   };
 
-  const demoUserLogin = async(e) => {
-    e.preventDefault()
 
-    return await dispatch(sessionActions.thunkLogin({email: 'demo@aa.io', password: 'password'}))
-    .then(navigate('/')).then(closeModal())
-  }
 
   const openModal = () => {
     setModalContent(<SignupFormModal />)
