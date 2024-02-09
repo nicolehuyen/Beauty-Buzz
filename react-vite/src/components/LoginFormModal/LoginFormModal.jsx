@@ -3,7 +3,7 @@ import { useModal } from "../../context/Modal";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import * as sessionActions from '../../redux/session';
+// import * as sessionActions from '../../redux/session';
 import SignupFormModal from "../SignupFormModal";
 import "./LoginForm.css";
 
@@ -14,13 +14,6 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal, setModalContent } = useModal();
-
-  const demoUserLogin = async(e) => {
-    e.preventDefault()
-
-    return await dispatch(sessionActions.thunkLogin({email: 'demo@aa.io', password: 'password'}))
-    .then(navigate('/')).then(closeModal())
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +33,30 @@ function LoginFormModal() {
     }
   };
 
+  // const demoUserLogin = async(e) => {
+  //   e.preventDefault()
 
+  //   return await dispatch(sessionActions.thunkLogin({email: 'demo@aa.io', password: 'password'}))
+  //   .then(navigate('/')).then(closeModal())
+  // }
+
+  const demoUserLogin = async(e) => {
+    e.preventDefault()
+
+    const serverResponse = await dispatch(
+      thunkLogin({
+        email: 'demo@aa.io',
+        password: 'password'
+      })
+    )
+
+    if(serverResponse) {
+      setErrors(serverResponse)
+    } else {
+      navigate('/')
+      closeModal()
+    }
+  }
 
   const openModal = () => {
     setModalContent(<SignupFormModal />)
