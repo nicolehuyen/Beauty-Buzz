@@ -122,6 +122,126 @@ def seed_reviews():
         review='This brush is a life saver whenever I do my brows. Highly recommend!',
         stars=5
     )
+    review21 = Review(
+        product_id=1,
+        creator_id=3,
+        review='This foundation is okay. It oxidizes so be aware!',
+        stars=3
+    )
+    review22 = Review(
+        product_id=2,
+        creator_id=4,
+        review='Good concealer! Covers most of my flaws.',
+        stars=4
+    )
+    review23 = Review(
+        product_id=3,
+        creator_id=1,
+        review='This powder is nice for setting.',
+        stars=4
+    )
+    review24 = Review(
+        product_id=4,
+        creator_id=2,
+        review='Love this setting spray! Makeup stays on all day.',
+        stars=5
+    )
+    review25 = Review(
+        product_id=5,
+        creator_id=4,
+        review='This mascara is alright. Better ones out there.',
+        stars=3
+    )
+    review26 = Review(
+        product_id=6,
+        creator_id=3,
+        review='Great for my brows!',
+        stars=5
+    )
+    review27 = Review(
+        product_id=7,
+        creator_id=1,
+        review='Nice eyeshadow palette! Would recommend to all my friends.',
+        stars=5
+    )
+    review28 = Review(
+        product_id=8,
+        creator_id=2,
+        review='These lashes are my go-to!',
+        stars=5
+    )
+    review29 = Review(
+        product_id=9,
+        creator_id=3,
+        review='This lip oil is definitely on the pricier side but it looks really nice!',
+        stars=4
+    )
+    review30 = Review(
+        product_id=10,
+        creator_id=4,
+        review='Great lipstick. I put this on often.',
+        stars=5
+    )
+    review31 = Review(
+        product_id=11,
+        creator_id=1,
+        review='The best lip pencil out there! Cheap and easy to use.',
+        stars=5
+    )
+    review32 = Review(
+        product_id=12,
+        creator_id=2,
+        review='This is the best lip repair stick out there!',
+        stars=5
+    )
+    review33 = Review(
+        product_id=13,
+        creator_id=3,
+        review='Gives you a nice, healthy look! Love this blush.',
+        stars=5
+    )
+    review34 = Review(
+        product_id=14,
+        creator_id=4,
+        review='Easy to use and blends well.',
+        stars=4
+    )
+    review35 = Review(
+        product_id=15,
+        creator_id=1,
+        review='My favorite bronzer. Must buy!',
+        stars=5
+    )
+    review36 = Review(
+        product_id=16,
+        creator_id=2,
+        review='This highlighter is okay.',
+        stars=3
+    )
+    review37 = Review(
+        product_id=17,
+        creator_id=3,
+        review='I bought this set for my daughter. It is nice for beginners.',
+        stars=4
+    )
+    review38 = Review(
+        product_id=18,
+        creator_id=4,
+        review='I swear by my beauty blender! Will always buy this!',
+        stars=5
+    )
+    review39 = Review(
+        product_id=19,
+        creator_id=1,
+        review='It\'s okay. There are better ones out there.',
+        stars=3
+    )
+    review40 = Review(
+        product_id=20,
+        creator_id=2,
+        review='Nice brow brush. Gets the job done.',
+        stars=4
+    )
 
     db.session.add(review1)
     db.session.add(review2)
@@ -143,6 +263,26 @@ def seed_reviews():
     db.session.add(review18)
     db.session.add(review19)
     db.session.add(review20)
+    db.session.add(review21)
+    db.session.add(review22)
+    db.session.add(review23)
+    db.session.add(review24)
+    db.session.add(review25)
+    db.session.add(review26)
+    db.session.add(review27)
+    db.session.add(review28)
+    db.session.add(review29)
+    db.session.add(review30)
+    db.session.add(review31)
+    db.session.add(review32)
+    db.session.add(review33)
+    db.session.add(review34)
+    db.session.add(review35)
+    db.session.add(review36)
+    db.session.add(review37)
+    db.session.add(review38)
+    db.session.add(review39)
+    db.session.add(review40)
     db.session.commit()
 
 def undo_reviews():
