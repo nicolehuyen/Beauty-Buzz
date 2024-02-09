@@ -91,7 +91,6 @@ function UpdateProduct() {
                                 <select
                                     className="form-input cate-input"
                                     value={category}
-                                    // defaultValue={category}
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
                                     <option value='' disabled>Select a category</option>
