@@ -7,6 +7,7 @@ import CreateProduct from '../components/CreateProduct/CreateProduct';
 import UpdateProduct from '../components/UpdateProduct/UpdateProduct';
 import ManageProducts from '../components/ManageProducts/ManageProducts';
 import LandingPage from '../components/LandingPage/LandingPage';
+import PageNotFound from '../components/PageNotFound/PageNotFound';
 
 export const router = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <h2>Page Not Found</h2>
+        element: <PageNotFound />
       }
     ],
   },

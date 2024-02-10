@@ -16,6 +16,7 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
   // const [username, setUsername] = useState("");
 
   const handleSubmit = async (e) => {
@@ -27,6 +28,8 @@ function SignupFormModal() {
     if(String(last_name).length > 40) return setErrors({last_name: 'Last name cannot exceed 40 characters.'})
     if(String(password).length < 8) return setErrors({password: 'Password must be 8 characters or more.'})
     if(password !== confirmPassword) return setErrors({confirmPassword: "Confirm Password field must be the same as the Password field."})
+
+    setLoading(true)
 
     const serverResponse = await dispatch(
       thunkSignup({
@@ -47,6 +50,8 @@ function SignupFormModal() {
 
   const demoUserLogin = async(e) => {
     e.preventDefault()
+
+    setLoading(true)
 
     const serverResponse = await dispatch(
       thunkLogin({
@@ -128,6 +133,7 @@ function SignupFormModal() {
           <button className="login-button" type="submit">Register</button>
           <button className='demo-user-login' onClick={demoUserLogin}>Demo User</button>
         </div>
+        <div style={{minHeight: 35}}>{loading ? <p className="login-loading-text">Loading...</p> : ' '}</div>
       </form>
     </div>
   );

@@ -22,13 +22,14 @@ function CreateProduct() {
         const newErrors = {}
 
         if(!name) newErrors.name = 'Product name is required.'
-        if(String(name).length > 80) newErrors.name = 'Product name cannot exceed 80 characters.'
+        if(String(name).length > 75) newErrors.name = 'Product name cannot exceed 75 characters.'
         if(!category) newErrors.category = 'Category is required.'
         if(Number(price) < 1) newErrors.price = 'Price must be at least $1.'
         if(Number(price) > 999) newErrors.price = 'Price cannot exceed $999.'
         if(String(description).length < 30) newErrors.description = 'Description must be at least 30 characters.'
         if(String(description).length > 1000) newErrors.description = 'Description cannot exceed 1,000 characters.'
         if(!image) newErrors.image = 'Image is required.'
+        if(!image?.name?.endsWith('.png') && !image?.name?.endsWith('.jpg') && !image?.name?.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format.'
 
         setErrors(newErrors)
     }, [sessionUser, navigate, name, category, price, description, image])
