@@ -13,9 +13,12 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal, setModalContent } = useModal();
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true)
 
     const serverResponse = await dispatch(
       thunkLogin({
@@ -34,6 +37,8 @@ function LoginFormModal() {
 
   const demoUserLogin = async(e) => {
     e.preventDefault()
+
+    setLoading(true)
 
     const serverResponse = await dispatch(
       thunkLogin({
@@ -97,6 +102,7 @@ function LoginFormModal() {
           <button className="login-button" type="submit">Sign In</button>
           <button className='demo-user-login' onClick={demoUserLogin}>Demo User</button>
         </div>
+        <div style={{minHeight: 35}}>{loading ? <p className="login-loading-text">Loading...</p> : ' '}</div>
       </form>
     </div>
   );

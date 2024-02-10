@@ -42,10 +42,10 @@ function LandingPage() {
                 </div>
             </div>
             <footer className='footer'>
-                <Link to={"https://github.com/nicolehuyen/Beauty-Buzz.git"}>
+                <Link to={"https://github.com/nicolehuyen/Beauty-Buzz.git"} target='_blank'>
                     <img className='social-media' src={github} alt='github' />
                 </Link>
-                <Link to={"https://www.linkedin.com/in/nicolehuyenle/"}>
+                <Link to={"https://www.linkedin.com/in/nicolehuyenle/"} target='_blank'>
                     <img className='social-media' src={linkedin} alt='linkedin' />
                 </Link>
             </footer>
