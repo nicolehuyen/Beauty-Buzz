@@ -17,6 +17,7 @@ function UpdateProduct() {
     const [errors, setErrors] = useState({})
     const [imageLoading, setImageLoading] = useState(false)
     const [submitted, setSubmitted] = useState(false)
+    const [changeImage, setChangeImage] = useState(false)
 
     useEffect(() => {
         if(!sessionUser) navigate('/')
@@ -29,10 +30,9 @@ function UpdateProduct() {
         if(Number(price) > 999) newErrors.price = 'Price cannot exceed $999.'
         if(String(description).length < 30) newErrors.description = 'Description must be at least 30 characters.'
         if(String(description).length > 1000) newErrors.description = 'Description cannot exceed 1,000 characters.'
-        if(!image || !image?.name?.endsWith('.png') && !image?.name?.endsWith('.jpg') && !image?.name?.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format.'
 
         setErrors(newErrors)
-    }, [sessionUser, navigate, name, category, price, description, image])
+    }, [sessionUser, navigate, name, category, price, description])
 
     useEffect(() => {
         dispatch(loadOneProductThunk(productId))
@@ -126,12 +126,19 @@ function UpdateProduct() {
                         </div>
                         <div className="entry-container">
                             <h4 className="input-title">Image</h4>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => setImage(e.target.files[0])}
-                            />
-                            <div style={{minHeight: 30}}>{submitted && errors.image ? <span className="error">{errors.image}</span> : ' '}</div>
+                                {!changeImage ? (
+                                    <>
+                                        <p style={{fontSize: 13, paddingBottom: 10}}>To update the image, click the thumbnail below.</p>
+                                        <img className="thumbnail" src={image} onClick={() => setChangeImage(!changeImage)}/>
+                                    </>
+                                ) :
+                                <input
+                                    type="file"
+                                    accept="image/png, image/jpeg, image/jpg"
+                                    onChange={(e) => setImage(e.target.files[0])}
+                                />
+                                }
+                            <div style={{minHeight: 20}}></div>
                         </div>
                         <div className="create-button-div">
                             <button className='create-prod-button' type="submit">Update Product</button>
