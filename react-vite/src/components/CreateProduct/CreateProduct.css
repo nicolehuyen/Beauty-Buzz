@@ -47,8 +47,28 @@
 }
 
 input::file-selector-button {
-    padding: 12px 120px;
+    padding: 12px 50px;
     cursor: pointer;
+    border: 1px solid rgb(163, 163, 163);
+    border-radius: 5px;
+    background-color: white;
+}
+
+input::file-selector-button:hover {
+    border-color: black;
+}
+
+.thumbnail {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border: 1px solid rgb(163, 163, 163);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.thumbnail:hover {
+    border-color: black;
 }
 
 .create-button-div {

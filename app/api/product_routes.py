@@ -74,25 +74,27 @@ def product_update(id):
     if form.validate_on_submit():
         product = Product.query.get(id)
         image = form.data['image']
-        remove_file_from_s3(product.image)
-        image.filename = get_unique_filename(image.filename)
-        upload = upload_file_to_s3(image)
-        print(upload)
 
-        if 'url' not in upload:
-        # if the dictionary doesn't have a url key
-        # it means that there was an error when you tried to upload
-        # so you send back that error message (and you printed it above)
-            return [upload], 401
+        if image is not None:
+            remove_file_from_s3(product.image)
+            image.filename = get_unique_filename(image.filename)
+            upload = upload_file_to_s3(image)
+            print(upload)
 
-        url = upload['url']
+            if 'url' not in upload:
+            # if the dictionary doesn't have a url key
+            # it means that there was an error when you tried to upload
+            # so you send back that error message (and you printed it above)
+                return {'errors': {'message': 'error with upload'}}, 401
+
+            url = upload['url']
+            product.image = url
 
         product.seller_id = current_user.id
         product.name = form.data['name']
         product.price = form.data['price']
         product.description = form.data['description']
         product.category = form.data['category']
-        product.image = url
 
         db.session.commit()
         return product.to_dict()

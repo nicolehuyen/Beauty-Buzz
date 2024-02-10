@@ -28,7 +28,7 @@ function CreateProduct() {
         if(Number(price) > 999) newErrors.price = 'Price cannot exceed $999.'
         if(String(description).length < 30) newErrors.description = 'Description must be at least 30 characters.'
         if(String(description).length > 1000) newErrors.description = 'Description cannot exceed 1,000 characters.'
-        if(!image || !image?.name?.endsWith('.png') && !image?.name?.endsWith('.jpg') && !image?.name?.endsWith('.jpeg')) newErrors.image = 'Image must be in .png, .jpg, or .jpeg format.'
+        if(!image) newErrors.image = 'Image is required.'
 
         setErrors(newErrors)
     }, [sessionUser, navigate, name, category, price, description, image])
@@ -113,7 +113,7 @@ function CreateProduct() {
                             <h4 className="input-title">Image</h4>
                             <input
                                 type="file"
-                                accept="image/*"
+                                accept="image/png, image/jpeg, image/jpg"
                                 onChange={(e) => setImage(e.target.files[0])}
                             />
                             <div style={{minHeight: 30}}>{submitted && errors.image ? <span className="error">{errors.image}</span> : ' '}</div>
