@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField
-from wtforms.validators import DataRequired, Email, ValidationError
+from wtforms.validators import DataRequired, Email, ValidationError, Length
 from app.models import User
 
 
@@ -21,10 +21,10 @@ def user_exists(form, field):
 
 
 class SignUpForm(FlaskForm):
-    first_name = StringField('first name', validators=[DataRequired()])
-    last_name = StringField('last name', validators=[DataRequired()])
+    first_name = StringField('first name', validators=[DataRequired(), Length(max=40)])
+    last_name = StringField('last name', validators=[DataRequired(), Length(max=40)])
     email = StringField('email', validators=[DataRequired(), user_exists, Email('Please enter a valid email address.')])
-    password = StringField('password', validators=[DataRequired()])
+    password = StringField('password', validators=[DataRequired(), Length(min=8)])
 
 
 # username = StringField('username', validators=[DataRequired(), username_exists])

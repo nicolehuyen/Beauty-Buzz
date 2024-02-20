@@ -14,10 +14,10 @@ function UpdateProduct() {
     const [price, setPrice] = useState(product?.price)
     const [description, setDescription] = useState(product?.description)
     const [image, setImage] = useState(null)
+    const [displayImage, setDisplayImage] = useState(null)
     const [errors, setErrors] = useState({})
     const [imageLoading, setImageLoading] = useState(false)
     const [submitted, setSubmitted] = useState(false)
-    const [changeImage, setChangeImage] = useState(false)
 
     useEffect(() => {
         if(!sessionUser) navigate('/')
@@ -44,9 +44,19 @@ function UpdateProduct() {
             setCategory(product?.category || '')
             setPrice(product?.price || '')
             setDescription(product?.description || '')
-            setImage(product?.image || '')
+            setDisplayImage(product?.image || '')
         }
     }, [product])
+
+    const fileWrap = (e) => {
+        e.stopPropagation();
+
+        const tempFile = e.target.files[0];
+
+        const newImageURL = URL.createObjectURL(tempFile); // Generate a local URL to render the image file inside of the <img> tag.
+        setImage(tempFile);
+        setDisplayImage(newImageURL)
+    }
 
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -126,18 +136,13 @@ function UpdateProduct() {
                         </div>
                         <div className="entry-container">
                             <h4 className="input-title">Image</h4>
-                                {!changeImage ? (
-                                    <>
-                                        <p style={{fontSize: 13, paddingBottom: 10}}>To update the image, click the thumbnail below.</p>
-                                        <img className="thumbnail" src={image} onClick={() => setChangeImage(!changeImage)}/>
-                                    </>
-                                ) :
-                                <input
+                                <p style={{fontSize: 13, paddingBottom: 10}}>To update the image, click the thumbnail below.</p>
+                                <label className="image-input-label" htmlFor="update-image-input"><img className="thumbnail" src={displayImage}/><input
+                                    id="update-image-input"
                                     type="file"
                                     accept="image/png, image/jpeg, image/jpg"
-                                    onChange={(e) => setImage(e.target.files[0])}
-                                />
-                                }
+                                    onChange={fileWrap}
+                                /></label>
                             <div style={{minHeight: 20}}></div>
                         </div>
                         <div className="create-button-div">
