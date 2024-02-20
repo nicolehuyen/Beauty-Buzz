@@ -104,7 +104,7 @@ def seed_products():
         price=32.00,
         description='NARS Blush is an award-winning, powder blush that delivers healthy-looking color to flatter any skin tone.',
         category='cheeks',
-        image='https://beauty-buzz-images.s3.us-east-2.amazonaws.com/nars-blush.png'
+        image='https://beauty-buzz-images.s3.us-east-2.amazonaws.com/blush.png'
     )
     cheeks2 = Product(
         seller_id=2,
