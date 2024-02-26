@@ -70,7 +70,7 @@ def create_order_item(orderId):
 
 @order_routes.route('/<int:orderId>/items/<int:itemId>', methods=['DELETE'])
 @login_required
-def delete_order(orderId, itemId):
+def delete_order_item(orderId, itemId):
     order = Order.query.get(orderId)
     order_item = OrderItem.query.get(itemId)
     db.session.delete(order_item)

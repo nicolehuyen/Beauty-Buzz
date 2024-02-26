@@ -9,13 +9,15 @@ import sessionReducer from "./session";
 import userReducer from "./user";
 import productReducer from "./product";
 import reviewReducer from "./review";
+import orderReducer from "./order";
 // import imageReducer from "./image";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   user: userReducer,
   product: productReducer,
-  review: reviewReducer
+  review: reviewReducer,
+  order: orderReducer
   // image: imageReducer
 });
 
