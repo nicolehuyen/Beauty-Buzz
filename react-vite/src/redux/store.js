@@ -10,6 +10,7 @@ import userReducer from "./user";
 import productReducer from "./product";
 import reviewReducer from "./review";
 import orderReducer from "./order";
+import orderItemReducer from "./orderItem";
 // import imageReducer from "./image";
 
 const rootReducer = combineReducers({
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   product: productReducer,
   review: reviewReducer,
-  order: orderReducer
+  order: orderReducer,
+  orderItem: orderItemReducer
   // image: imageReducer
 });
 

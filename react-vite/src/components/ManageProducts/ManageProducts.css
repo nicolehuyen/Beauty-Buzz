@@ -1,5 +1,5 @@
 .manage-products-section {
-    margin: 110px 0px;
+    margin: 110px 64px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,9 +8,9 @@
 .manage-products-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 750px;
+    /* gap: 750px; */
     padding-bottom: 20px;
     white-space: nowrap;
 }
