@@ -1,5 +1,6 @@
 const LOAD_SHOPPING_BAG = 'bag/loadShoppingBag'
 const CREATE_BAG_ITEM = 'bag/createBagItem'
+const UPDATE_BAG_ITEM = 'bag/updateBagItem'
 const DELETE_BAG_ITEM = 'bag/deleteBagItem'
 
 const loadShoppingBag = (items) => {
@@ -12,6 +13,13 @@ const loadShoppingBag = (items) => {
 const createBagItem = (item) => {
     return {
         type: CREATE_BAG_ITEM,
+        item
+    }
+}
+
+const updateBagItem = (item) => {
+    return {
+        type: UPDATE_BAG_ITEM,
         item
     }
 }
@@ -47,8 +55,22 @@ export const createBagItemThunk = (item) => async(dispatch) => {
     }
 }
 
-export const deleteBagItemThunk = (itemId, productId) => async(dispatch) => {
-    const res = await fetch(`/api/bag/${itemId}/${productId}`, {
+export const updateBagItemThunk = (item, itemId) => async(dispatch) => {
+    const res = await fetch(`/api/bag/${itemId}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(item)
+    })
+
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(updateBagItem(data))
+        return data
+    }
+}
+
+export const deleteBagItemThunk = (itemId) => async(dispatch) => {
+    const res = await fetch(`/api/bag/${itemId}`, {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'}
     })
@@ -68,6 +90,10 @@ const shoppingBagReducer = (state = {}, action) => {
             return newState
         }
         case CREATE_BAG_ITEM: {
+            const newState = { ...state, [action.item.id]: action.item }
+            return newState
+        }
+        case UPDATE_BAG_ITEM: {
             const newState = { ...state, [action.item.id]: action.item }
             return newState
         }

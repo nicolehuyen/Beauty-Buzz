@@ -27,10 +27,25 @@ def add_to_bag():
         return bag.to_dict()
     return form.errors, 401
 
-@shopping_bag_routes.route('/<int:itemId>/<int:productId>', methods=['DELETE'])
+@shopping_bag_routes.route('/<int:itemId>', methods=['PUT'])
 @login_required
-def delete_from_bag(itemId, productId):
-    product = Product.query.get(productId)
+def update_bag_item(itemId):
+    bag_item = ShoppingBag.query.get(itemId)
+    form = ShoppingBagForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        bag_item.buyer_id = current_user.id
+        bag_item.product_id = form.data['product_id']
+        bag_item.quantity = form.data['quantity']
+
+        db.session.commit()
+        return bag_item.to_dict()
+    return form.errors, 401
+
+@shopping_bag_routes.route('/<int:itemId>', methods=['DELETE'])
+@login_required
+def delete_from_bag(itemId):
+    # product = Product.query.get(productId)
     bag_item = ShoppingBag.query.get(itemId)
     db.session.delete(bag_item)
     db.session.commit()

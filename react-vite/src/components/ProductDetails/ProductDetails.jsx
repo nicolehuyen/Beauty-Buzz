@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { loadOneProductThunk } from '../../redux/product';
 import { loadUsersThunk } from '../../redux/user';
 import ProductReviews from '../ProductReviews/ProductReviews';
-import { createBagItemThunk } from '../../redux/shoppingBag';
+import { createBagItemThunk, updateBagItemThunk } from '../../redux/shoppingBag';
 
 function ProductDetails() {
     const dispatch = useDispatch()
@@ -17,6 +17,8 @@ function ProductDetails() {
     const reviewStars = reviews.map(item => item.stars)
     const [addedToBag, setAddedToBag] = useState(false)
     const sessionUser = useSelector((state) => state.session.user)
+    const bag = useSelector(state => state.bag)
+    const bagItems = Object.values(bag)
 
     useEffect(() => {
         dispatch(loadOneProductThunk(productId))
@@ -32,14 +34,19 @@ function ProductDetails() {
         return averageRating
     }
 
-    const comingSoon = (e) => {
-        e.preventDefault()
-        window.alert('Feature Coming Soon!')
-    }
+    // const comingSoon = (e) => {
+    //     e.preventDefault()
+    //     window.alert('Feature Coming Soon!')
+    // }
 
     const addToBag = (e) => {
         e.preventDefault()
-        dispatch(createBagItemThunk({ buyer_id: sessionUser.id, product_id: product.id, quantity: 1 }))
+        const existingItem = bagItems.find(item => item.product_id === product.id)
+        if (existingItem) {
+            dispatch(updateBagItemThunk({ buyer_id: sessionUser.id, product_id: product.id, quantity: existingItem.quantity + 1 }, existingItem.id))
+        } else {
+            dispatch(createBagItemThunk({ buyer_id: sessionUser.id, product_id: product.id, quantity: 1 }))
+        }
         setAddedToBag(true)
     }
 
@@ -72,7 +79,7 @@ function ProductDetails() {
                 <h2 className='detail-price'>{`$${product?.price}`}</h2>
                 <div className='detail-buttons'>
                     <button className='add-to-bag' onClick={addToBag}>{addedToBag ? 'ADDED' : 'ADD TO BAG'}</button>
-                    <button className='favorite-item' onClick={comingSoon}>{<i className="fa-regular fa-heart"></i>}</button>
+                    {/* <button className='favorite-item' onClick={comingSoon}>{<i className="fa-regular fa-heart"></i>}</button> */}
                 </div>
                 <h3>Product Details</h3>
                 <p className='product-description'>{product.description}</p>
