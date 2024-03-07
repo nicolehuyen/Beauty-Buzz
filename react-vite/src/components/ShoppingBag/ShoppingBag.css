@@ -17,6 +17,14 @@
     padding-top: 20px;
 }
 
+.bag-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    background-color: #f1d5db;
+    padding: 20px;
+}
+
 .bag-right {
     width: 350px;
     display: flex;

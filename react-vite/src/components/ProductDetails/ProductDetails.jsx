@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from "react-router";
 import './ProductDetails.css'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { loadOneProductThunk } from '../../redux/product';
 import { loadUsersThunk } from '../../redux/user';
 import ProductReviews from '../ProductReviews/ProductReviews';
+import { createBagItemThunk } from '../../redux/shoppingBag';
 
 function ProductDetails() {
     const dispatch = useDispatch()
@@ -14,6 +15,8 @@ function ProductDetails() {
     const review = useSelector(state => state.review)
     const reviews = Object.values(review)
     const reviewStars = reviews.map(item => item.stars)
+    const [addedToBag, setAddedToBag] = useState(false)
+    const sessionUser = useSelector((state) => state.session.user)
 
     useEffect(() => {
         dispatch(loadOneProductThunk(productId))
@@ -32,6 +35,12 @@ function ProductDetails() {
     const comingSoon = (e) => {
         e.preventDefault()
         window.alert('Feature Coming Soon!')
+    }
+
+    const addToBag = (e) => {
+        e.preventDefault()
+        dispatch(createBagItemThunk({ buyer_id: sessionUser.id, product_id: product.id, quantity: 1 }))
+        setAddedToBag(true)
     }
 
     return (
@@ -62,7 +71,7 @@ function ProductDetails() {
                 }
                 <h2 className='detail-price'>{`$${product?.price}`}</h2>
                 <div className='detail-buttons'>
-                    <button className='add-to-bag' onClick={comingSoon}>ADD TO BAG</button>
+                    <button className='add-to-bag' onClick={addToBag}>{addedToBag ? 'ADDED' : 'ADD TO BAG'}</button>
                     <button className='favorite-item' onClick={comingSoon}>{<i className="fa-regular fa-heart"></i>}</button>
                 </div>
                 <h3>Product Details</h3>

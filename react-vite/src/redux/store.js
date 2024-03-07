@@ -9,6 +9,7 @@ import sessionReducer from "./session";
 import userReducer from "./user";
 import productReducer from "./product";
 import reviewReducer from "./review";
+import shoppingBagReducer from "./shoppingBag";
 import orderReducer from "./order";
 import orderItemReducer from "./orderItem";
 // import imageReducer from "./image";
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   product: productReducer,
   review: reviewReducer,
+  bag: shoppingBagReducer,
   order: orderReducer,
   orderItem: orderItemReducer
   // image: imageReducer
