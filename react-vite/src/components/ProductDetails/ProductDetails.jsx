@@ -6,6 +6,8 @@ import { loadOneProductThunk } from '../../redux/product';
 import { loadUsersThunk } from '../../redux/user';
 import ProductReviews from '../ProductReviews/ProductReviews';
 import { createBagItemThunk, updateBagItemThunk } from '../../redux/shoppingBag';
+import { useModal } from "../../context/Modal";
+import LoginFormModal from "../LoginFormModal";
 
 function ProductDetails() {
     const dispatch = useDispatch()
@@ -16,6 +18,7 @@ function ProductDetails() {
     const reviews = Object.values(review)
     const reviewStars = reviews.map(item => item.stars)
     const [addedToBag, setAddedToBag] = useState(false)
+    const {setModalContent} = useModal()
     const sessionUser = useSelector((state) => state.session.user)
     const bag = useSelector(state => state.bag)
     const bagItems = Object.values(bag)
@@ -38,6 +41,15 @@ function ProductDetails() {
     //     e.preventDefault()
     //     window.alert('Feature Coming Soon!')
     // }
+
+    const openModal = () => {
+        setModalContent(<LoginFormModal />)
+    }
+
+    const login = (e) => {
+        e.preventDefault()
+        openModal()
+    }
 
     const addToBag = (e) => {
         e.preventDefault()
@@ -78,8 +90,12 @@ function ProductDetails() {
                 }
                 <h2 className='detail-price'>{`$${product?.price}`}</h2>
                 <div className='detail-buttons'>
+                {!sessionUser ? (
+                    <button className='add-to-bag' onClick={login}>ADD TO BAG</button>
+                ) : (
                     <button className='add-to-bag' onClick={addToBag}>{addedToBag ? 'ADDED' : 'ADD TO BAG'}</button>
-                    {/* <button className='favorite-item' onClick={comingSoon}>{<i className="fa-regular fa-heart"></i>}</button> */}
+                )}
+                {/* <button className='favorite-item' onClick={comingSoon}>{<i className="fa-regular fa-heart"></i>}</button> */}
                 </div>
                 <h3>Product Details</h3>
                 <p className='product-description'>{product.description}</p>

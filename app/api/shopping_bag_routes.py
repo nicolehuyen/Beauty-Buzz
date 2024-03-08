@@ -45,7 +45,6 @@ def update_bag_item(itemId):
 @shopping_bag_routes.route('/<int:itemId>', methods=['DELETE'])
 @login_required
 def delete_from_bag(itemId):
-    # product = Product.query.get(productId)
     bag_item = ShoppingBag.query.get(itemId)
     db.session.delete(bag_item)
     db.session.commit()

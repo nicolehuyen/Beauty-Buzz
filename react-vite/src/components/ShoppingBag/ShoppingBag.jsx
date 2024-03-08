@@ -15,7 +15,10 @@ function ShoppingBag() {
     const productsObj = useSelector((state) => state.product)
     const products = Object.values(productsObj)
     const user = useSelector(state => state.user)
-    const [quantities, setQuantities] = useState({})
+    const [quantities, setQuantities] = useState(() => {
+        const savedQuantities = localStorage.getItem('quantities')
+        return savedQuantities ? JSON.parse(savedQuantities) : {}
+    })
 
     useEffect(() => {
         if(!sessionUser) navigate('/')
@@ -28,18 +31,30 @@ function ShoppingBag() {
         dispatch(deleteBagItemThunk(itemId))
     }
 
-    const totalQuantity = bagItems.reduce((total, item) => total + item.quantity, 0)
+    const totalQuantity = bagItems.reduce((total, item) => total + (quantities[item.id] || item.quantity), 0)
 
     const handleQuantityChange = (itemId, newQuantity) => {
-        setQuantities({ ...quantities, [itemId]: newQuantity })
+        const updatedQuantities = { ...quantities, [itemId]: newQuantity }
+        setQuantities(updatedQuantities)
+        localStorage.setItem('quantities', JSON.stringify(updatedQuantities))
     }
+
+    // order summary
+    const subtotal = bagItems.reduce((total, item) => total + (Number(products[item.product_id - 1]?.price) * (quantities[item.id] || item.quantity)), 0)
+
+    const shipping = subtotal >= 35 ? 0 : 5.99
+
+    const taxRate = 0.0625
+    const tax = subtotal * taxRate
+
+    const total = subtotal + tax + shipping
 
     return (
         <div className="bag-container">
             <div className="bag-left">
                 <div className="bag-title">
                     <h2>Bag</h2>
-                    <p>{totalQuantity <= 1 ? `${totalQuantity} item` : `${totalQuantity} items`}</p>
+                    <p>{totalQuantity === 1 ? `${totalQuantity} item` : `${totalQuantity} items`}</p>
                 </div>
                 <div>
                     {!bagItems.length ? (
@@ -58,23 +73,21 @@ function ShoppingBag() {
                                     </div>
                                 </div>
                                 <div className='price-quantity-remove'>
-                                    <p className='bag-price'>${(Number(products[item?.product_id - 1]?.price) * Number(quantities[item.id] || item?.quantity)).toFixed(2)}</p>
-                                    {/* <p>Quantity: {item?.quantity}</p> */}
-                                    <p>
-                                        <select value={quantities[item.id] || item.quantity} onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}>
+                                    <p className='bag-price'>${(Number(products[item?.product_id - 1]?.price) * Number(quantities[item?.id] || item?.quantity)).toFixed(2)}</p>
+                                    <span>
+                                        <select className='select-dropdown' value={quantities[item?.id] || item?.quantity} onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}>
                                             {[...Array(10).keys()].map((number) => (
                                                 <option key={number + 1} value={number + 1}>{number + 1}</option>
                                             ))}
                                         </select>
-                                    </p>
-                                    {/* <button onClick={() => removeFromBag(item?.id)}>REMOVE</button> */}
-                                    <button onClick={() => {
+                                    </span>
+                                    <button className='remove-button' onClick={() => {
                                         if (quantities[item.id] && quantities[item.id] > 1) {
-                                            handleQuantityChange(item.id, quantities[item.id] - 1);
+                                            handleQuantityChange(item.id, quantities[item.id] - 1)
                                         } else {
-                                            removeFromBag(item.id);
+                                            removeFromBag(item.id)
                                         }
-                                    }}>REMOVE</button>
+                                    }}><i className="fa-regular fa-trash-can"></i>REMOVE</button>
                                 </div>
                             </div>
                         ))
@@ -84,20 +97,21 @@ function ShoppingBag() {
             <div className="bag-right">
                 <h2 style={{paddingBottom: 10}}>Order Summary</h2>
                 <div className="order-subtotal">
-                    <p>Subtotal</p>
-                    <p>$0.00</p>
+                    <p>Subtotal <span className='subtotal-items'>{totalQuantity === 1 ? `(${totalQuantity} item)` : `(${totalQuantity} items)`}</span></p>
+                    <p>${subtotal.toFixed(2)}</p>
                 </div>
                 <div className="order-shipping">
                     <p>Shipping</p>
-                    <p>FREE</p>
+                    <p>{shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}</p>
                 </div>
+                {shipping > 0 ? <p className='free-shipping'>You are ${(35 - subtotal).toFixed(2)} away from free shipping.</p> : ''}
                 <div className="order-tax">
                     <p>Tax</p>
-                    <p>$0.00</p>
+                    <p>${tax.toFixed(2)}</p>
                 </div>
                 <div className="order-total">
                     <p>Total</p>
-                    <p>$0.00</p>
+                    <p>${total.toFixed(2)}</p>
                 </div>
                 <div className='checkout-button'>
                     <button className='checkout'>CHECKOUT</button>
