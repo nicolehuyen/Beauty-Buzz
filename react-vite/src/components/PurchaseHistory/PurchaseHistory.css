@@ -1,0 +1,77 @@
+.purchase-container {
+    margin: 110px 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.purchase-box {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+.purchase-title {
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
+}
+
+.no-history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 160px;
+    text-wrap: nowrap;
+    gap: 10px;
+}
+
+.fa-gift {
+    font-size: 80px;
+    color: #f1d5db;
+}
+
+.purchase-titles {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    padding: 20px 0px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    text-wrap: nowrap;
+}
+
+.orders {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 0px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    text-wrap: nowrap;
+}
+
+.order-date {
+    width: 176.55px;
+}
+
+.order-num {
+    width: 207.02px;
+}
+
+.order-status {
+    width: 133.76px;
+    text-wrap: wrap;
+}
+
+.order-details {
+    min-height: 45px;
+    min-width: 130px;
+    font-weight: 600;
+    font-size: medium;
+    cursor: pointer;
+    border-radius: 25px;
+    border: black 1px solid;
+    background-color: white;
+}
+
+.order-details:hover {
+    background-color: #f3dbe0;
+    transform: scale(1.04);
+}

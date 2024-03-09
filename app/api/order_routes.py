@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import db, Order, OrderItem
+from app.models import db, Order, OrderItem, ShoppingBag
 from app.forms import OrderItemForm, OrderForm
 from flask_login import login_required, current_user
 
@@ -32,6 +32,17 @@ def create_order():
             buyer_id = current_user.id
         )
         db.session.add(order)
+        db.session.commit()
+
+        bag_items = ShoppingBag.query.filter_by(buyer_id=current_user.id).all()
+        for bag_item in bag_items:
+            order_item = OrderItem(
+                order_id=order.id,
+                product_id=bag_item.product_id,
+                quantity=bag_item.quantity
+            )
+            db.session.add(order_item)
+
         db.session.commit()
         return order.to_dict()
     return form.errors, 401

@@ -2,9 +2,10 @@ import { useNavigate } from 'react-router-dom'
 import './ShoppingBag.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { deleteBagItemThunk, loadShoppingBagThunk } from '../../redux/shoppingBag'
+import { clearBagThunk, deleteBagItemThunk, loadShoppingBagThunk, updateBagItemThunk } from '../../redux/shoppingBag'
 import { loadProductsThunk } from '../../redux/product'
 import { loadUsersThunk } from '../../redux/user'
+import { createOrderThunk } from '../../redux/order'
 
 function ShoppingBag() {
     const navigate = useNavigate()
@@ -19,6 +20,7 @@ function ShoppingBag() {
         const savedQuantities = localStorage.getItem('quantities')
         return savedQuantities ? JSON.parse(savedQuantities) : {}
     })
+    const [placeOrder, setPlaceOrder] = useState(false)
 
     useEffect(() => {
         if(!sessionUser) navigate('/')
@@ -34,9 +36,14 @@ function ShoppingBag() {
     const totalQuantity = bagItems.reduce((total, item) => total + (quantities[item.id] || item.quantity), 0)
 
     const handleQuantityChange = (itemId, newQuantity) => {
-        const updatedQuantities = { ...quantities, [itemId]: newQuantity }
-        setQuantities(updatedQuantities)
-        localStorage.setItem('quantities', JSON.stringify(updatedQuantities))
+        const item = bagItems.find(item => item.id === itemId)
+        if (item) {
+            const { buyer_id, product_id } = item
+            dispatch(updateBagItemThunk({ buyer_id, product_id, quantity: newQuantity}, itemId))
+            const updatedQuantities = { ...quantities, [itemId]: newQuantity }
+            setQuantities(updatedQuantities)
+            localStorage.setItem('quantities', JSON.stringify(updatedQuantities))
+        }
     }
 
     // order summary
@@ -49,6 +56,14 @@ function ShoppingBag() {
 
     const total = subtotal + tax + shipping
 
+    // checkout
+    const checkout = (e) => {
+        e.preventDefault()
+
+        dispatch(createOrderThunk({ buyer_id: sessionUser.id })).then(() => { dispatch(clearBagThunk()) })
+        setPlaceOrder(true)
+    }
+
     return (
         <div className="bag-container">
             <div className="bag-left">
@@ -59,6 +74,7 @@ function ShoppingBag() {
                 <div>
                     {!bagItems.length ? (
                         <div className="bag-items">
+                            <i className="fa-solid fa-bag-shopping bag"></i>
                             <h1>Your bag is empty</h1>
                             <p>Keep shopping and add something.</p>
                         </div>
@@ -75,7 +91,7 @@ function ShoppingBag() {
                                 <div className='price-quantity-remove'>
                                     <p className='bag-price'>${(Number(products[item?.product_id - 1]?.price) * Number(quantities[item?.id] || item?.quantity)).toFixed(2)}</p>
                                     <span>
-                                        <select className='select-dropdown' value={quantities[item?.id] || item?.quantity} onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}>
+                                        <select className='select-dropdown' value={item?.quantity} onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}>
                                             {[...Array(10).keys()].map((number) => (
                                                 <option key={number + 1} value={number + 1}>{number + 1}</option>
                                             ))}
@@ -114,7 +130,7 @@ function ShoppingBag() {
                     <p>${total.toFixed(2)}</p>
                 </div>
                 <div className='checkout-button'>
-                    <button className='checkout'>CHECKOUT</button>
+                    <button className='checkout' onClick={checkout} disabled={total <= 5.99}>{placeOrder ? 'PURCHASED' : 'CHECKOUT'}</button>
                 </div>
             </div>
         </div>

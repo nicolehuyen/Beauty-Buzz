@@ -2,6 +2,7 @@ const LOAD_SHOPPING_BAG = 'bag/loadShoppingBag'
 const CREATE_BAG_ITEM = 'bag/createBagItem'
 const UPDATE_BAG_ITEM = 'bag/updateBagItem'
 const DELETE_BAG_ITEM = 'bag/deleteBagItem'
+const CLEAR_BAG = 'bag/clearBag'
 
 const loadShoppingBag = (items) => {
     return {
@@ -28,6 +29,12 @@ const deleteBagItem = (itemId) => {
     return {
         type: DELETE_BAG_ITEM,
         itemId
+    }
+}
+
+const clearBag = () => {
+    return {
+        type: CLEAR_BAG
     }
 }
 
@@ -80,6 +87,17 @@ export const deleteBagItemThunk = (itemId) => async(dispatch) => {
     }
 }
 
+export const clearBagThunk = () => async(dispatch) => {
+    const res = await fetch('/api/bag/clear', {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'}
+    })
+
+    if (res.ok) {
+        dispatch(clearBag())
+    }
+}
+
 const shoppingBagReducer = (state = {}, action) => {
     switch(action.type) {
         case LOAD_SHOPPING_BAG: {
@@ -101,6 +119,9 @@ const shoppingBagReducer = (state = {}, action) => {
             const newState = {...state}
             delete newState[action.itemId]
             return newState
+        }
+        case CLEAR_BAG: {
+            return {}
         }
         default:
             return state

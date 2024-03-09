@@ -49,3 +49,12 @@ def delete_from_bag(itemId):
     db.session.delete(bag_item)
     db.session.commit()
     return 'Successfully Deleted'
+
+@shopping_bag_routes.route('/clear', methods=['DELETE'])
+@login_required
+def clear_bag():
+    bag_items = ShoppingBag.query.filter_by(buyer_id=current_user.id).all()
+    for item in bag_items:
+        db.session.delete(item)
+    db.session.commit()
+    return 'Successfully Deleted'

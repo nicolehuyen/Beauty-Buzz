@@ -9,6 +9,7 @@ import ManageProducts from '../components/ManageProducts/ManageProducts';
 import LandingPage from '../components/LandingPage/LandingPage';
 import PageNotFound from '../components/PageNotFound/PageNotFound';
 import ShoppingBag from '../components/ShoppingBag/ShoppingBag';
+import PurchaseHistory from '../components/PurchaseHistory/PurchaseHistory';
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "bag",
         element: <ShoppingBag />,
+      },
+      {
+        path: "purchases",
+        element: <PurchaseHistory />,
       },
       {
         path: "*",
