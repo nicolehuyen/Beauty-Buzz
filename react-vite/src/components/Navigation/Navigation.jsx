@@ -32,14 +32,19 @@ function Navigation() {
       </div>
       <div className="nav-right">
         {!sessionUser ? (
+          <>
+          <i className="fa-solid fa-bag-shopping" onClick={login}/>
           <i className="fas fa-user-circle" onClick={login}/>
+          </>
         ) : (
+          <>
+          <i className="fa-solid fa-bag-shopping" onClick={() => navigate('/bag')}/>
           <ProfileButton />
+          </>
         )}
-        {/* <i className="fa-solid fa-bag-shopping"></i> */}
       </div>
     </div>
-  );
+  )
 }
 
 export default Navigation;
