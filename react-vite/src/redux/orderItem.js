@@ -61,7 +61,7 @@ export const deleteOrderItemThunk = (orderId, itemId) => async(dispatch) => {
 const orderItemReducer = (state = {}, action) => {
     switch(action.type) {
         case LOAD_ORDER_ITEMS: {
-            const newState = {...state}
+            const newState = {}
             action.items.items.forEach(item => {
                 newState[item.id] = item
             })

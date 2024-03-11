@@ -54,6 +54,10 @@ function ProfileButton() {
                 <span onClick={() => { navigate('/products/manage'); closeMenu(); }}>Manage Products</span>
               </div>
               <div className="profile-user-info">
+                <i className="fa-solid fa-credit-card profile-icon"></i>
+                <span onClick={() => { navigate('/purchases'); closeMenu(); }}>Purchase History</span>
+              </div>
+              <div className="profile-user-info">
                 <i className="fa-solid fa-right-from-bracket profile-icon"></i>
                 <span onClick={logout}>Sign Out</span>
               </div>

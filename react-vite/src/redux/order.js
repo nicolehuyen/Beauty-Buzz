@@ -1,6 +1,14 @@
+const LOAD_ORDERS = 'orders/loadOrders'
 const LOAD_ORDER = 'orders/loadOrder'
 const CREATE_ORDER = 'orders/createOrder'
 const DELETE_ORDER = 'orders/deleteOrder'
+
+const loadOrders = (orders) => {
+    return {
+        type: LOAD_ORDERS,
+        orders
+    }
+}
 
 const loadOrder = (order) => {
     return {
@@ -20,6 +28,16 @@ const deleteOrder = (orderId) => {
     return {
         type: DELETE_ORDER,
         orderId
+    }
+}
+
+export const loadOrdersThunk = () => async(dispatch) => {
+    const res = await fetch('/api/orders/')
+
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(loadOrders(data))
+        return data
     }
 }
 
@@ -60,6 +78,13 @@ export const deleteOrderThunk = (orderId) => async(dispatch) => {
 
 const orderReducer = (state = {}, action) => {
     switch(action.type) {
+        case LOAD_ORDERS: {
+            const newState = {...state}
+            action.orders.user_orders.forEach(order => {
+                newState[order.id] = order
+            })
+            return newState
+        }
         case LOAD_ORDER: {
             const newState = {...state}
             newState[action.order.id] = action.order
