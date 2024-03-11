@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from "react-router";
 import './ProductDetails.css'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { loadOneProductThunk } from '../../redux/product';
 import { loadUsersThunk } from '../../redux/user';
 import ProductReviews from '../ProductReviews/ProductReviews';
+import { createBagItemThunk, updateBagItemThunk } from '../../redux/shoppingBag';
+import { useModal } from "../../context/Modal";
+import LoginFormModal from "../LoginFormModal";
 
 function ProductDetails() {
     const dispatch = useDispatch()
@@ -14,13 +17,18 @@ function ProductDetails() {
     const review = useSelector(state => state.review)
     const reviews = Object.values(review)
     const reviewStars = reviews.map(item => item.stars)
+    const [addedToBag, setAddedToBag] = useState(false)
+    const {setModalContent} = useModal()
+    const sessionUser = useSelector((state) => state.session.user)
+    const bag = useSelector(state => state.bag)
+    const bagItems = Object.values(bag)
 
     useEffect(() => {
         dispatch(loadOneProductThunk(productId))
         dispatch(loadUsersThunk())
     }, [dispatch, productId])
 
-    if(!product || !user || !review) return null
+    if(!product || !user || !review || !bag) return null
 
     function averageRating(stars) {
         if(!stars) return 0
@@ -29,9 +37,29 @@ function ProductDetails() {
         return averageRating
     }
 
-    const comingSoon = (e) => {
+    // const comingSoon = (e) => {
+    //     e.preventDefault()
+    //     window.alert('Feature Coming Soon!')
+    // }
+
+    const openModal = () => {
+        setModalContent(<LoginFormModal />)
+    }
+
+    const login = (e) => {
         e.preventDefault()
-        window.alert('Feature Coming Soon!')
+        openModal()
+    }
+
+    const addToBag = (e) => {
+        e.preventDefault()
+        const existingItem = bagItems.find(item => item.product_id === product.id)
+        if (existingItem) {
+            dispatch(updateBagItemThunk({ buyer_id: sessionUser.id, product_id: product.id, quantity: existingItem.quantity + 1 }, existingItem.id))
+        } else {
+            dispatch(createBagItemThunk({ buyer_id: sessionUser.id, product_id: product.id, quantity: 1 }))
+        }
+        setAddedToBag(true)
     }
 
     return (
@@ -62,8 +90,12 @@ function ProductDetails() {
                 }
                 <h2 className='detail-price'>{`$${product?.price}`}</h2>
                 <div className='detail-buttons'>
-                    <button className='add-to-bag' onClick={comingSoon}>ADD TO BAG</button>
-                    <button className='favorite-item' onClick={comingSoon}>{<i className="fa-regular fa-heart"></i>}</button>
+                {!sessionUser ? (
+                    <button className='add-to-bag' onClick={login}>ADD TO BAG</button>
+                ) : (
+                    <button className='add-to-bag' onClick={addToBag}>{addedToBag ? 'ADDED' : 'ADD TO BAG'}</button>
+                )}
+                {/* <button className='favorite-item' onClick={comingSoon}>{<i className="fa-regular fa-heart"></i>}</button> */}
                 </div>
                 <h3>Product Details</h3>
                 <p className='product-description'>{product.description}</p>

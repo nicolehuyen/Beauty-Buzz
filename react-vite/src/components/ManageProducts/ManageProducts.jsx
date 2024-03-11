@@ -35,7 +35,14 @@ function ManageProducts() {
                             <button className='create-new-product-button' onClick={() => navigate('/products/new')}>Create New Product</button>
                         </div>
                     </div>
-                    <div className="products-container">
+                    {!products.length && (
+                        <div className="no-products">
+                            <i className="fa-solid fa-face-frown-open"></i>
+                            <h1>No products</h1>
+                            <p>Create a new makeup product today!</p>
+                        </div>
+                    )}
+                    <div className="products-container2">
                         {products.map((product) => (
                             <div key={product.id}>
                                 <div style={{height: 480}} className='product-tile' onClick={() => navigate(`/products/${product?.id}`)}>
