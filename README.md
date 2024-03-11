@@ -1,6 +1,6 @@
 # Beauty Buzz
 
-Beauty Buzz is an ecommerce site inspired by Ulta and Etsy. On this site, makeup enthusiasts can list their own makeup products and review makeup products that others have shared. Some features to be expected in the future are Shopping Cart and Favorites.
+Beauty Buzz is an ecommerce site inspired by Ulta and Etsy. On this site, makeup enthusiasts can list their own makeup products, review makeup products that others have shared, and make purchases. Some features to be expected in the future are Favorites and Search.
 
 # Live Link
 
@@ -60,6 +60,9 @@ https://beauty-buzz.onrender.com
 # Manage Products
 ![Manage Products](./gifs/ManageProducts.gif)
 
+# Shopping Bag
+![Shopping Bag](./gifs/ShoppingBag.png)
+
 # Endpoints
 
 ### Auth
@@ -93,17 +96,38 @@ https://beauty-buzz.onrender.com
 | PUT /api/products/:id/reviews/:reviewId    | This fetch sends the form data to the back end to process the update of a review. It returns an object representing the updated review if the update succeeds.     | {  <br>    "created_at": DATETIME, <br>    "creator_id": INTEGER, <br>    "id": INTEGER, <br>    "product_id": INTEGER, <br>    "review": STRING, <br>    "stars": INTEGER, <br>     "updated_at": DATETIME <br> } <br><br> Status: 200                                        |
 | DELETE /api/products/:id/reviews/:reviewId | This fetch will delete the review. It returns a message 'Successfully Deleted' if it succeeds.                                                                     | Successfully Deleted <br><br> Status: 200                                                                                                                                                                                                                                      |
 
+### Shopping Bag
+
+| **Request**             | **Purpose**                                                                                                                                                            | **Return Value**                                                                                                                                                                                                                                                           |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GET /api/bag/           | This fetch returns an object representing all the items in the current user's shopping bag.                                                                            | {<br>   "bag_items": [<br>     {<br>       "buyer_id": INTEGER,<br>       "created_at": DATETIME,<br>       "id": INTEGER, <br>       "product_id": INTEGER,<br>       "quantity": INTEGER,<br>       "updated_at": DATETIME<br>    }<br>   ]<br> }  <br><br> Status: 200 |
+| POST /api/bag/new       | This fetch sends the form data to the back end to process the creation of a new bag item. It returns an object representing the new bag item if the creation succeeds. | {  <br>    "buyer_id": INTEGER,<br>    "created_at": DATETIME, <br>    "id": INTEGER, <br>    "product_id": INTEGER, <br>    "quantity": INTEGER, <br>     "updated_at": DATETIME <br> } <br><br> Status: 200                                                              |
+| PUT /api/bag/:itemId    | This fetch sends the form data to the back end to process the update of a bag item. It returns an object representing the updated item if the update succeeds.         | {  <br>    "buyer_id": INTEGER,<br>    "created_at": DATETIME, <br>    "id": INTEGER, <br>    "product_id": INTEGER, <br>    "quantity": INTEGER, <br>     "updated_at": DATETIME <br> } <br><br> Status: 200                                                              |
+| DELETE /api/bag/:itemId | This fetch will delete the bag item. It returns a message 'Successfully Deleted' if it succeeds.                                                                       | Successfully Deleted <br><br> Status: 200                                                                                                                                                                                                                                  |
+| DELETE /api/bag/:itemId | This fetch will clear the bag. It returns a message 'Successfully Deleted' if it succeeds.                                                                             | Successfully Deleted <br><br> Status: 200                                                                                                                                                                                                                                  |
+
+### Order
+
+| **Request**                    | **Purpose**                                                                                                                                                      | **Return Value**                                                                                                                                                                                                                                                        |
+|--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GET /api/orders/               | This fetch returns an object representing all of the current user's orders.                                                                                      | {<br>   "user_orders": [<br>     {<br>       "buyer_id": INTEGER,<br>       "created_at": DATETIME,<br>       "id": INTEGER,<br>       "status": STRING,<br>       "updated_at": DATETIME<br>     }<br> ]<br> }   <br><br> Status: 200                                  |
+| GET /api/orders/:orderId       | This fetch returns an object representing a single order.                                                                                                        | {<br>   "buyer_id": INTEGER,<br>   "created_at": DATETIME,<br>   "id": INTEGER,<br>   "status": STRING,<br>   "updated_at": DATETIME<br> }   <br><br> Status: 200                                                                                                       |
+| POST /api/orders/new           | This fetch sends the form data to the back end to process the creation of a new order. It returns an object representing the new order if the creation succeeds. | { <br>   "buyer_id": INTEGER, <br>   "created_at": DATETIME, <br>   "id": INTEGER, <br>   "status": STRING, <br>   "updated_at": DATETIME <br> }   <br><br> Status: 200                                                                                                 |
+| DELETE /api/orders/:orderId    | This fetch will delete the order. It returns a message 'Successfully Deleted' if it succeeds.                                                                    | Successfully Deleted <br><br> Status: 200                                                                                                                                                                                                                               |
+| GET /api/orders/:orderId/items | This fetch returns an object representing all of the order's items.                                                                                              | {<br>   "items": [<br>     {<br>       "created_at": DATETIME,<br>       "id": INTEGER,<br>       "order_id": INTEGER,<br>       "product_id": INTEGER,<br>       "quantity": INTEGER,<br>       "updated_at": DATETIME<br>     }<br> ]<br> }  <br><br> Status: 200 |
+
 # Feature List
 
 1. Products
 2. Reviews
+3. Shopping Cart
+4. Past Orders
 
 # Future Features
 
-1. Shopping Cart
-2. Favorites
-3. Search
-4. Past Orders / Reorder
+1. Favorites
+2. Search
+3. Reorder
 
 # Connect
 

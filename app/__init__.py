@@ -46,18 +46,6 @@ Migrate(app, db)
 CORS(app)
 
 
-# sets a background job that runs indefinitely, updating the order status every minute
-@app.before_first_request
-def activate_job():
-    def run_job():
-        while True:
-            Order.update_order_status()
-            time.sleep(60)  # Check every minute
-
-    thread = threading.Thread(target=run_job)
-    thread.start()
-
-
 # Since we are deploying with Docker and Flask,
 # we won't be using a buildpack when we deploy to Heroku.
 # Therefore, we need to make sure that in production any
