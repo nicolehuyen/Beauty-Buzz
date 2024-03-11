@@ -1,0 +1,122 @@
+.order-detail-container {
+    margin: 110px 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-box {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-title {
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
+}
+
+.order-info {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 20px 0px;
+    border-bottom: 1px solid black;
+    /* font-size: small; */
+}
+
+.order-detail-titles {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 0px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    text-wrap: nowrap;
+    font-weight: bold;
+}
+
+.order-detail-item {
+    width: 450px;
+}
+
+.order-detail-price {
+    width: 90px;
+}
+
+.order-detail-quantity {
+    width: 80px;
+}
+
+.order-detail-amount {
+    width: 80px;
+}
+
+.bag-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 0px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    /* text-wrap: nowrap; */
+}
+
+.bag-item-details2 {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    min-width: 450px;
+}
+
+.bag-item-image2 {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    background-color: #f1d5db;
+    padding: 20px;
+    opacity: 100%;
+    transition: opacity .5s;
+    cursor: pointer;
+}
+
+.bag-item-image2:hover {
+    opacity: 80%;
+    transition: opacity .5s;
+}
+
+.bag-seller-name {
+    color: #6E6E6E;
+    font-size: 15px;
+    padding: 5px 0px;
+    cursor: pointer;
+}
+
+.bag-product-name {
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.price-quantity-amount {
+    display: flex;
+    flex-direction: row;
+    width: 350px;
+}
+
+.order-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 0px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.order-subtotal, .order-shipping, .order-tax, .order-total2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.order-total2 {
+    font-weight: bold;
+    padding: 20px 0px;
+}

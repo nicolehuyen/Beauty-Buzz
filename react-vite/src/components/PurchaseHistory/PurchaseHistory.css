@@ -33,10 +33,10 @@
 .purchase-titles {
     display: flex;
     flex-direction: row;
-    gap: 80px;
     padding: 20px 0px;
     border-bottom: 1px solid rgb(224, 224, 224);
     text-wrap: nowrap;
+    font-weight: bold;
 }
 
 .orders {
@@ -48,16 +48,15 @@
 }
 
 .order-date {
-    width: 176.55px;
+    width: 160px;
 }
 
 .order-num {
-    width: 207.02px;
+    width: 170px;
 }
 
 .order-status {
-    width: 133.76px;
-    text-wrap: wrap;
+    width: 190px;
 }
 
 .order-details {

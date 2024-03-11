@@ -29,11 +29,13 @@ function ShoppingBag() {
         dispatch(loadUsersThunk())
     }, [dispatch, sessionUser, navigate])
 
+    if (!bag || !productsObj || !user) return null
+
     const removeFromBag = (itemId) => {
         dispatch(deleteBagItemThunk(itemId))
     }
 
-    const totalQuantity = bagItems.reduce((total, item) => total + (quantities[item.id] || item.quantity), 0)
+    const totalQuantity = bagItems.reduce((total, item) => total + (item.quantity), 0)
 
     const handleQuantityChange = (itemId, newQuantity) => {
         const item = bagItems.find(item => item.id === itemId)

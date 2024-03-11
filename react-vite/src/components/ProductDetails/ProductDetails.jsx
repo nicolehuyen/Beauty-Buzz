@@ -28,7 +28,7 @@ function ProductDetails() {
         dispatch(loadUsersThunk())
     }, [dispatch, productId])
 
-    if(!product || !user || !review) return null
+    if(!product || !user || !review || !bag) return null
 
     function averageRating(stars) {
         if(!stars) return 0

@@ -9,6 +9,7 @@ class Order(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     buyer_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    status = db.Column(db.String, default='Payment Complete')
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
@@ -19,6 +20,7 @@ class Order(db.Model):
         return {
             'id': self.id,
             'buyer_id': self.buyer_id,
+            'status': self.status,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
