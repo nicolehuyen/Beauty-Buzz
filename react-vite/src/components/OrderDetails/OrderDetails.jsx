@@ -67,7 +67,7 @@ function OrderDetails() {
                     <p>|</p>
                     <p>{month(order?.created_at)} {day(order?.created_at)}, {year(order?.created_at)}</p>
                     <p>|</p>
-                    <p>order status</p>
+                    <p>{order?.status}</p>
                 </div>
                 <div className='order-detail-titles'>
                     <p className='order-detail-item'>Item</p>

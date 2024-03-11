@@ -62,7 +62,7 @@ function ShoppingBag() {
     const checkout = (e) => {
         e.preventDefault()
 
-        dispatch(createOrderThunk({ buyer_id: sessionUser.id })).then(() => { dispatch(clearBagThunk()) })
+        dispatch(createOrderThunk({ buyer_id: sessionUser.id, status: 'Payment Complete' })).then(() => { dispatch(clearBagThunk()) })
         setPlaceOrder(true)
     }
 

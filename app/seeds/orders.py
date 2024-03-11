@@ -3,16 +3,20 @@ from sqlalchemy.sql import text
 
 def seed_orders():
     order1 = Order(
-        buyer_id=1
+        buyer_id=1,
+        status='Delivered'
     )
     order2 = Order(
-        buyer_id=2
+        buyer_id=2,
+        status='Delivered'
     )
     order3 = Order(
-        buyer_id=3
+        buyer_id=3,
+        status='Delivered'
     )
     order4 = Order(
-        buyer_id=4
+        buyer_id=4,
+        status='Delivered'
     )
 
     db.session.add(order1)

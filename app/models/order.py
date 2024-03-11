@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class Order(db.Model):
     __tablename__ = 'orders'
@@ -24,3 +24,13 @@ class Order(db.Model):
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
+
+    def update_order_status():
+        orders = Order.query.filter_by(status='Payment Complete').all()
+        for order in orders:
+            if (datetime.now() - order.created_at) >= timedelta(minutes=10):
+                order.status = 'Shipped'
+                db.session.commit()
+            elif (datetime.now() - order.created_at) >= timedelta(minutes=20):
+                order.status = 'Delivered'
+                db.session.commit()

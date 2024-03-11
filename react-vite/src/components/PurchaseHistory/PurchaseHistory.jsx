@@ -59,7 +59,7 @@ function PurchaseHistory() {
                         <div key={order.id} className='orders'>
                             <p className='order-date'>{month(order?.created_at)} {day(order?.created_at)}, {year(order?.created_at)}</p>
                             <p className='order-num'>{String(order?.id).padStart(10, '0')}</p>
-                            <p className='order-status'>Payment Complete</p>
+                            <p className='order-status'>{order?.status}</p>
                             <button className='order-details' onClick={() => navigate(`/purchases/${order?.id}`)}>View Details</button>
                         </div>
                     ))}
