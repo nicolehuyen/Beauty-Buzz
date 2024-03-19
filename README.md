@@ -1,6 +1,6 @@
 # Beauty Buzz
 
-Beauty Buzz is an ecommerce site inspired by Ulta and Etsy. On this site, makeup enthusiasts can list their own makeup products, review makeup products that others have shared, and make purchases. Some features to be expected in the future are Favorites and Search.
+Beauty Buzz is an e-commerce site inspired by Ulta and Etsy. On this site, makeup enthusiasts can list their own makeup products, review makeup products that others have shared, and make purchases. Some features to be expected in the future are Favorites and Search.
 
 # Live Link
 
